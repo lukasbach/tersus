@@ -49,6 +49,9 @@
     "parserOptions": {
       "project": "./tsconfig.app.json"
     },
+    "rules": {
+      "import/extensions": "off"
+    },
     "ignorePatterns": [
       "lib",
       "dist",
