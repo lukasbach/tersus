@@ -1,0 +1,42 @@
+{
+  "name": "tersus",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "lint:fix": "eslint . --fix",
+    "start": "vite"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@lukasbach/eslint-config-deps": "^1.0.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.5.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1"
+  },
+  "eslintConfig": {
+    "extends": "@lukasbach/base/react",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "ignorePatterns": [
+      "lib",
+      "dist",
+      "*.js"
+    ]
+  },
+  "volta": {
+    "node": "20.15.0",
+    "yarn": "4.3.1"
+  }
+}
