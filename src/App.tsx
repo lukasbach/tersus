@@ -19,6 +19,7 @@ const App = () => {
         fontSizes: {
           md: ".9rem",
         },
+        primaryColor: "indigo",
         autoContrast: true,
         components: {
           TextInput: {

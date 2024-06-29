@@ -49,16 +49,9 @@ export const DashboardPage: FC = () => {
           rowHeight={60}
           draggableHandle=".draghandle"
         >
-          {Object.entries(dashboard.data.widgets).map(([id, widget]) => (
+          {Object.keys(dashboard.data.widgets).map((id) => (
             <div key={id}>
-              <WidgetContainer
-                key={id}
-                widgetId={id}
-                dashboard={dashboard}
-                payload={widget}
-                deleteWidget={() => dashboard.deleteWidget(id)}
-                updateWidgetConfig={dashboard.updateWidgetConfig}
-              />
+              <WidgetContainer key={id} widgetId={id} dashboard={dashboard} />
             </div>
           ))}
         </ResponsiveGridLayout>

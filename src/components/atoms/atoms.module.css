@@ -1,0 +1,29 @@
+.floatingBarContainer {
+    position: relative;
+    height: 100%;
+}
+
+.floatingBar {
+    opacity: 0;
+    pointer-events: none;
+    top: 5px;
+    right: 5px;
+    display: inline-flex;
+    position: absolute;
+    border: 1px solid var(--mantine-color-gray-3);
+    padding: 2px;
+    background: var(--mantine-color-gray-0);
+    border-radius: var(--mantine-radius-default);
+    gap: 2px;
+    z-index: var(--mantine-z-index-overlay);
+}
+
+.floatingBarContainer:hover .floatingBar, .floatingBarContainer:focus-within .floatingBar {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.floatingBar svg {
+    width: 16px;
+    height: 16px;
+}
