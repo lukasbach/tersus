@@ -9,7 +9,7 @@ export const HomePage: FC = () => {
   return (
     <Button
       onClick={async () => {
-        const { id } = await createDashboard({});
+        const { id } = await createDashboard({ widgets: {}, layouts: {} });
         navigate({ to: boardViewRoute.path, params: { id } });
       }}
     >

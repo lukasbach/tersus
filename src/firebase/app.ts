@@ -34,7 +34,7 @@ export const dashboardsCollection = collection(
   "boards",
 ) as CollectionReference<DashboardConfig>;
 export const getDashboardDoc = (id: string) =>
-  doc(db, "dashboards", id) as DocumentReference<DashboardConfig>;
+  doc(db, "boards", id) as DocumentReference<DashboardConfig>;
 
 export const useDashboardData = (id: string | null) =>
   useDocument<DashboardConfig>(id ? getDashboardDoc(id) : null);
