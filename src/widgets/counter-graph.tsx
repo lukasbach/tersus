@@ -1,4 +1,5 @@
 import { AreaChart } from "@mantine/charts";
+import { useMemo } from "react";
 import { PayloadOfWidgetDefinition, WidgetDefinition } from "../types.ts";
 import { HistoryItem, counterWidget } from "./counter.tsx";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
@@ -24,21 +25,23 @@ const regroupHistoryItems = (
   const relevantItems = items.filter(
     (item) => item.from > Date.now() - config.goingBack,
   );
+  if (relevantItems.length === 0 && items.length > 0)
+    relevantItems.push(items.at(-1)!);
+
   const now = Date.now();
   const newItems: any[] = [];
   for (let i = 0; i < width * 3; i++) {
-    const slice = relevantItems.filter(
-      (item) =>
-        item.from < now - (config.goingBack / width) * i &&
-        item.to > now - (config.goingBack / width) * (i + 1),
+    const item = relevantItems.find(
+      (item) => item.to > now - (config.goingBack / width) * i,
     );
-    const lastCount = newItems.at(-1)?.[name];
+    const lastCount =
+      newItems.at(-1)?.[name] ?? relevantItems.at(-1)?.value ?? 0;
     newItems.push({
       date: stringifyDate(
         new Date(now - (config.goingBack / width) * i),
         config.goingBack,
       ),
-      [name]: slice.find((c) => c.value !== lastCount)?.value ?? lastCount,
+      [name]: item?.value ?? lastCount,
     });
   }
   return newItems.reverse();
@@ -59,11 +62,20 @@ export const counterGraphWidget: WidgetDefinition<
     referencing && (
       <AreaChart
         h="100%"
-        data={regroupHistoryItems(
-          referencing.config.history,
-          referencing.config.title,
-          layout.w,
-          config,
+        data={useMemo(
+          () =>
+            regroupHistoryItems(
+              referencing.config.history,
+              referencing.config.title,
+              layout.w,
+              config,
+            ),
+          [
+            config,
+            layout.w,
+            referencing.config.history,
+            referencing.config.title,
+          ],
         )}
         dataKey="date"
         series={[{ name: referencing.config.title, color: "indigo.6" }]}
