@@ -35,7 +35,7 @@ export const counterButtonsWidget: WidgetDefinition<
     columns: 2,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  displayComponent: ({ config, referencing }) => (
+  DisplayComponent: ({ config, referencing }) => (
     <Grid>
       {config.buttons.map((button) => (
         <Grid.Col span={12 / config.columns} key={button.key}>
@@ -57,7 +57,7 @@ export const counterButtonsWidget: WidgetDefinition<
       ))}
     </Grid>
   ),
-  configComponent: ({ config, onChange }) => (
+  ConfigComponent: ({ config, onChange }) => (
     <>
       <NumberInput
         label="Columns"
@@ -115,5 +115,5 @@ export const counterButtonsWidget: WidgetDefinition<
       />
     </>
   ),
-  iconComponent: () => <div>XXX</div>,
+  IconComponent: () => <div>XXX</div>,
 };

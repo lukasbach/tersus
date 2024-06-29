@@ -41,7 +41,7 @@ export const counterWidget: WidgetDefinition<Payload, undefined> = {
     granularity: 5000,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2, maxW: 4, maxH: 4 },
-  displayComponent: ({ config }) => (
+  DisplayComponent: ({ config }) => (
     <Center h="100%">
       <Stat title={config.title}>
         <NumberFormatter value={config.value} thousandSeparator />
@@ -50,19 +50,19 @@ export const counterWidget: WidgetDefinition<Payload, undefined> = {
   ),
   iconActions: [
     {
-      icon: IconPlus,
+      icon: () => <IconPlus />,
       text: "Increment",
       action: (props) => applyCounterChange(props.config, props.onChange, 1),
     },
     {
-      icon: IconMinus,
+      icon: () => <IconMinus />,
       text: "Decrement",
       action: (props) => applyCounterChange(props.config, props.onChange, -1),
     },
   ],
   menuActions: [
     {
-      icon: IconRotate,
+      icon: () => <IconRotate />,
       text: "Reset",
       action: (props) =>
         modals.openConfirmModal({
@@ -73,5 +73,5 @@ export const counterWidget: WidgetDefinition<Payload, undefined> = {
         }),
     },
   ],
-  iconComponent: () => <div>XXX</div>,
+  IconComponent: () => <div>XXX</div>,
 };

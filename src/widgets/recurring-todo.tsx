@@ -1,5 +1,5 @@
 import { Center } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import ReactTimeAgo from "react-time-ago";
 import { WidgetDefinition } from "../types.ts";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
@@ -19,7 +19,7 @@ export const recurringTodoWidget: WidgetDefinition<
     title: "Take out the trash",
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2, maxW: 4, maxH: 4 },
-  displayComponent: ({ config }) => (
+  DisplayComponent: ({ config }) => (
     <Center h="100%">
       <Stat
         title={config.title}
@@ -33,12 +33,12 @@ export const recurringTodoWidget: WidgetDefinition<
   ),
   iconActions: [
     {
-      icon: IconPlus,
+      icon: () => <IconCheck />,
       text: "Done now!",
       action: (props) => props.onChange({ lastDone: Date.now() }),
     },
   ],
-  configComponent: ({ config, onChange }) => (
+  ConfigComponent: ({ config, onChange }) => (
     <FrequencyInput
       mt="xs"
       label="Frequency"
@@ -46,5 +46,5 @@ export const recurringTodoWidget: WidgetDefinition<
       onChangeFrequency={(frequency) => onChange({ frequency })}
     />
   ),
-  iconComponent: () => <div>XXX</div>,
+  IconComponent: () => <div>XXX</div>,
 };

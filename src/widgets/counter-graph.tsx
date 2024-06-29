@@ -60,36 +60,36 @@ export const counterGraphWidget: WidgetDefinition<
     goingBack: 10000,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  displayComponent: ({ config, referencing, layout }) =>
-    referencing && (
-      <AreaChart
-        h="100%"
-        data={useMemo(
-          () =>
-            regroupHistoryItems(
-              referencing.config.history,
-              referencing.config.title,
-              layout.w,
-              config,
-            ),
-          [
-            config,
-            layout.w,
-            referencing.config.history,
-            referencing.config.title,
-          ],
-        )}
-        dataKey="date"
-        series={[{ name: referencing.config.title, color: "indigo.6" }]}
-        curveType="linear"
-      />
-    ),
-  configComponent: ({ config, onChange }) => (
+  DisplayComponent: ({ config, referencing, layout }) => {
+    const data = useMemo(
+      () =>
+        referencing &&
+        regroupHistoryItems(
+          referencing.config.history,
+          referencing.config.title,
+          layout.w,
+          config,
+        ),
+      [config, layout.w, referencing],
+    );
+    return (
+      referencing && (
+        <AreaChart
+          h="100%"
+          data={data!}
+          dataKey="date"
+          series={[{ name: referencing.config.title, color: "indigo.6" }]}
+          curveType="linear"
+        />
+      )
+    );
+  },
+  ConfigComponent: ({ config, onChange }) => (
     <FrequencyInput
       label="How far should the graph go back?"
       value={config.goingBack}
       onChangeFrequency={(goingBack) => onChange({ goingBack })}
     />
   ),
-  iconComponent: () => <div>XXX</div>,
+  IconComponent: () => <div>XXX</div>,
 };

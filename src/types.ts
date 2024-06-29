@@ -30,9 +30,9 @@ export type WidgetDefinition<T, R> = {
   referencing?: WidgetDefinition<R, any>;
   sizing: Partial<Layout>;
   default: T & Pick<DefaultConfig, "title">;
-  configComponent?: ComponentType<WidgetRenderProps<T, R>>;
-  displayComponent: ComponentType<WidgetRenderProps<T, R>>;
-  iconComponent: ComponentType<WidgetRenderProps<T, R>>;
+  ConfigComponent?: ComponentType<WidgetRenderProps<T, R>>;
+  DisplayComponent: ComponentType<WidgetRenderProps<T, R>>;
+  IconComponent: ComponentType<WidgetRenderProps<T, R>>;
   iconActions?: WidgetAction<T, R>[];
   menuActions?: WidgetAction<T, R>[];
 };

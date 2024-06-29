@@ -34,8 +34,6 @@ export const WidgetContainer: FC<{
 
   const widget = dashboard.data!.widgets[widgetId];
   const widgetDef = widgets[widget.type];
-  const DisplayComponent = widgetDef.displayComponent;
-  const ConfigComponent = widgetDef.configComponent;
 
   const renderProps = useWidgetRenderProps(
     widgetId,
@@ -84,7 +82,9 @@ export const WidgetContainer: FC<{
             clearable
           />
         )}
-        {ConfigComponent && <ConfigComponent {...(renderProps as any)} />}
+        {widgetDef.ConfigComponent && (
+          <widgetDef.ConfigComponent {...(renderProps as any)} />
+        )}
       </Modal>
       <FloatingBarContainer>
         <Card
@@ -170,7 +170,7 @@ export const WidgetContainer: FC<{
           </FloatingBar>
           <div style={{ height: "100%" }}>
             {renderProps.referenceResolved ? (
-              <DisplayComponent {...renderProps} />
+              <widgetDef.DisplayComponent {...renderProps} />
             ) : (
               <Center h="100%">
                 <Stack>

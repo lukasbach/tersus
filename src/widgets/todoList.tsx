@@ -49,7 +49,7 @@ export const todoListWidget: WidgetDefinition<
     },
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  displayComponent: ({ config, onChange }) => {
+  DisplayComponent: ({ config, onChange }) => {
     const changeItem = useCallback(
       (id: string, update: Partial<TodoItem>) => {
         onChange({
@@ -209,5 +209,5 @@ export const todoListWidget: WidgetDefinition<
         ),
     },
   ],
-  iconComponent: () => <div>XXX</div>,
+  IconComponent: () => <div>XXX</div>,
 };
