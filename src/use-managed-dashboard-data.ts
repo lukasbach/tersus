@@ -17,14 +17,15 @@ export const useManagedDashboardData = (id: string) => {
     }
   }, [loadedData]);
 
-  const persist = useStableHandler(() => {
+  const persist = useStableHandler(async () => {
     if (!currentData) return;
     console.log("Saving dashboard:", id, currentData);
-    updateDashboard(id, removeUndefinedValues(currentData));
+    await updateDashboard(id, removeUndefinedValues(currentData));
   });
 
   useDebouncedEffect(persist, [currentData], 3000, 10000);
   useWindowEvent("pagehide", persist);
+  useWindowEvent("beforeunload", persist);
 
   const onLayoutChange = useStableHandler((_, layouts: Layouts) => {
     if (!currentData) return;
@@ -43,7 +44,10 @@ export const useManagedDashboardData = (id: string) => {
           ...currentData.widgets,
           [widgetId]: {
             ...currentData.widgets[widgetId],
-            config: newConfig,
+            config: {
+              ...currentData.widgets[widgetId].config,
+              ...newConfig,
+            },
           },
         },
       });
@@ -71,7 +75,7 @@ export const useManagedDashboardData = (id: string) => {
       widgets: {
         ...currentData.widgets,
         [id]: {
-          config: {},
+          config: widget.default,
           type: widgetType,
         },
       },

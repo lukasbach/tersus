@@ -27,11 +27,13 @@
     "@tiptap/starter-kit": "^2.4.0",
     "dayjs": "^1.11.11",
     "firebase": "^10.12.2",
+    "javascript-time-ago": "^2.5.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-firebase-hooks": "^5.1.1",
     "react-grid-layout": "^1.4.4",
     "react-resizable": "^3.0.5",
+    "react-time-ago": "^7.3.3",
     "recharts": "2"
   },
   "devDependencies": {
