@@ -28,7 +28,8 @@ import { FloatingBar } from "./atoms/floating-bar.tsx";
 export const WidgetContainer: FC<{
   widgetId: string;
   dashboard: ReturnType<typeof useManagedDashboardData>;
-}> = ({ dashboard, widgetId }) => {
+  breakpoint: string;
+}> = ({ dashboard, widgetId, breakpoint }) => {
   const [settingsOpen, settings] = useDisclosure(false);
 
   const widget = dashboard.data!.widgets[widgetId];
@@ -36,7 +37,12 @@ export const WidgetContainer: FC<{
   const DisplayComponent = widgetDef.displayComponent;
   const ConfigComponent = widgetDef.configComponent;
 
-  const renderProps = useWidgetRenderProps(widgetId, dashboard, settings.open);
+  const renderProps = useWidgetRenderProps(
+    widgetId,
+    dashboard,
+    breakpoint,
+    settings.open,
+  );
 
   return (
     <>

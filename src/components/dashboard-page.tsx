@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import { AppShell, Button } from "@mantine/core";
 import { boardViewRoute } from "../router.tsx";
@@ -10,6 +10,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export const DashboardPage: FC = () => {
   const { id } = boardViewRoute.useParams();
+  const [breakpoint, setBreakpoint] = useState("lg");
   const dashboard = useManagedDashboardData(id);
 
   if (!dashboard.data) return null;
@@ -48,10 +49,16 @@ export const DashboardPage: FC = () => {
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
           rowHeight={60}
           draggableHandle=".draghandle"
+          onBreakpointChange={(newBreakpoint) => setBreakpoint(newBreakpoint)}
         >
           {Object.keys(dashboard.data.widgets).map((id) => (
             <div key={id}>
-              <WidgetContainer key={id} widgetId={id} dashboard={dashboard} />
+              <WidgetContainer
+                key={id}
+                widgetId={id}
+                dashboard={dashboard}
+                breakpoint={breakpoint}
+              />
             </div>
           ))}
         </ResponsiveGridLayout>

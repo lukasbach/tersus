@@ -15,6 +15,7 @@ export type WidgetRenderProps<T, R> = {
     config: R & DefaultConfig;
     onChange: (payload: Partial<R & DefaultConfig>) => void;
   };
+  layout: Layout;
 };
 
 type WidgetAction<T, R> = {

@@ -6,6 +6,7 @@ import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
 export const useWidgetRenderProps = (
   widgetId: string,
   dashboard: ReturnType<typeof useManagedDashboardData>,
+  breakpoint: string,
   onOpenEditModal: () => void,
 ) => {
   const widget = dashboard.data!.widgets[widgetId];
@@ -15,11 +16,16 @@ export const useWidgetRenderProps = (
     (widget.config.referencingId &&
       dashboard.data?.widgets[widget.config.referencingId]);
 
+  const layout = useMemo(() => {
+    return dashboard.data?.layouts[breakpoint].find((l) => l.i === widgetId)!;
+  }, [breakpoint, dashboard.data?.layouts, widgetId]);
+
   const props = useMemo<WidgetRenderProps<any, any>>(() => {
     const referencingConfig =
       widget.config.referencingId &&
       dashboard.data?.widgets[widget.config.referencingId]?.config;
     return {
+      layout,
       config: widget.config,
       onChange: (cfg) => dashboard.updateWidgetConfig(widgetId, cfg),
       onOpenEditModal,
@@ -35,7 +41,14 @@ export const useWidgetRenderProps = (
               ),
           },
     };
-  }, [widget.config, dashboard, referenceResolved, widgetId]);
+  }, [
+    widget.config,
+    dashboard,
+    layout,
+    onOpenEditModal,
+    referenceResolved,
+    widgetId,
+  ]);
 
   return props;
 };
