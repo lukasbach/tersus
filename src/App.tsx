@@ -4,11 +4,13 @@ import { RouterProvider } from "@tanstack/react-router";
 import { ModalsProvider } from "@mantine/modals";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import { DatesProvider } from "@mantine/dates";
 import { router } from "./router.tsx";
 
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -59,7 +61,9 @@ const App = () => {
       }}
     >
       <ModalsProvider>
-        <RouterProvider router={router} />
+        <DatesProvider settings={{ consistentWeeks: true, firstDayOfWeek: 1 }}>
+          <RouterProvider router={router} />
+        </DatesProvider>
       </ModalsProvider>
     </MantineProvider>
   );

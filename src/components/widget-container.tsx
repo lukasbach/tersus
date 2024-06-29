@@ -116,7 +116,7 @@ export const WidgetContainer: FC<{
                   aria-label={action.text}
                   style={{ cursor: "pointer" }}
                 >
-                  {action.icon && <action.icon />}
+                  {action.icon && <action.icon {...renderProps} />}
                 </ActionIcon>
               );
             })}
@@ -134,7 +134,9 @@ export const WidgetContainer: FC<{
                   return (
                     <Menu.Item
                       key={action.text}
-                      leftSection={action.icon && <action.icon />}
+                      leftSection={
+                        action.icon && <action.icon {...renderProps} />
+                      }
                       onClick={() => action.action(renderProps)}
                     >
                       {action.text}

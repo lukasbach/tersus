@@ -28,6 +28,8 @@ const regroupHistoryItems = (
   if (relevantItems.length === 0 && items.length > 0)
     relevantItems.push(items.at(-1)!);
 
+  // TODO this defaults to never being 0 at the start of the graph
+
   const now = Date.now();
   const newItems: any[] = [];
   for (let i = 0; i < width * 3; i++) {

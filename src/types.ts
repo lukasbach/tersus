@@ -20,7 +20,7 @@ export type WidgetRenderProps<T, R> = {
 
 type WidgetAction<T, R> = {
   text: string;
-  icon?: ComponentType<any>;
+  icon?: ComponentType<WidgetRenderProps<T, R>>;
   action: (props: WidgetRenderProps<T, R>) => Promise<void> | void;
   skip?: (props: WidgetRenderProps<T, R>) => boolean;
 };

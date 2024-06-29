@@ -14,7 +14,6 @@ export const DashboardPage: FC = () => {
   const dashboard = useManagedDashboardData(id);
 
   if (!dashboard.data) return null;
-  console.log("Dashboard data", dashboard.data);
 
   return (
     <AppShell
@@ -40,7 +39,7 @@ export const DashboardPage: FC = () => {
           );
         })}
       </AppShell.Navbar>
-      <AppShell.Main>
+      <AppShell.Main bg="gray.1">
         <ResponsiveGridLayout
           className="layout"
           layouts={dashboard.data.layouts}
