@@ -53,11 +53,11 @@ export const DashboardPage: FC = () => {
             <div key={id}>
               <WidgetContainer
                 key={id}
+                widgetId={id}
+                dashboard={dashboard}
                 payload={widget}
                 deleteWidget={() => dashboard.deleteWidget(id)}
-                updateConfig={(config) =>
-                  dashboard.updateWidgetConfig(id, config)
-                }
+                updateWidgetConfig={dashboard.updateWidgetConfig}
               />
             </div>
           ))}

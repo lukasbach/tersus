@@ -1,32 +1,46 @@
 import { Layout, Layouts } from "react-grid-layout";
 import { ComponentType } from "react";
 
-export type WidgetRenderProps<T> = {
-  config: T;
-  onOpenEditModal: () => void;
-  onChange: (payload: Partial<T>) => void;
+type DefaultConfig = {
+  title: string;
+  referencingId?: string;
 };
 
-type WidgetAction<T> = {
+export type WidgetRenderProps<T, R> = {
+  referenceResolved: boolean;
+  config: T & DefaultConfig;
+  onOpenEditModal: () => void;
+  onChange: (payload: Partial<T & DefaultConfig>) => void;
+  referencing?: {
+    config: R & DefaultConfig;
+    onChange: (payload: Partial<R & DefaultConfig>) => void;
+  };
+};
+
+type WidgetAction<T, R> = {
   text: string;
   icon?: ComponentType<any>;
-  action: (props: WidgetRenderProps<T>) => Promise<void> | void;
-  skip?: (props: WidgetRenderProps<T>) => boolean;
+  action: (props: WidgetRenderProps<T, R>) => Promise<void> | void;
+  skip?: (props: WidgetRenderProps<T, R>) => boolean;
 };
 
-export type WidgetDefinition<T> = {
+export type WidgetDefinition<T, R> = {
   name: string;
+  referencing?: WidgetDefinition<R, any>;
   sizing: Partial<Layout>;
-  default: T;
-  configComponent: ComponentType<WidgetRenderProps<T>>;
-  displayComponent: ComponentType<WidgetRenderProps<T>>;
-  iconComponent: ComponentType<WidgetRenderProps<T>>;
-  iconActions?: WidgetAction<T>[];
-  menuActions?: WidgetAction<T>[];
+  default: T & Pick<DefaultConfig, "title">;
+  configComponent?: ComponentType<WidgetRenderProps<T, R>>;
+  displayComponent: ComponentType<WidgetRenderProps<T, R>>;
+  iconComponent: ComponentType<WidgetRenderProps<T, R>>;
+  iconActions?: WidgetAction<T, R>[];
+  menuActions?: WidgetAction<T, R>[];
 };
+
+export type PayloadOfWidgetDefinition<T> =
+  T extends WidgetDefinition<infer U, any> ? U : never;
 
 export type WidgetPayload<T = any> = {
-  config: T;
+  config: T & DefaultConfig;
   type: string;
 };
 

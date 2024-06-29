@@ -1,43 +1,40 @@
-import { FC, useMemo } from "react";
-import { ActionIcon, Card, Flex, Group, Menu, rem } from "@mantine/core";
+import { FC } from "react";
+import {
+  ActionIcon,
+  Button,
+  Card,
+  Center,
+  Flex,
+  Group,
+  Menu,
+  Stack,
+  Text,
+  rem,
+} from "@mantine/core";
 import {
   IconDots,
   IconGripVertical,
   IconPencil,
   IconTrash,
 } from "@tabler/icons-react";
-import { modals } from "@mantine/modals";
-import { WidgetPayload, WidgetRenderProps } from "../types.ts";
+import { WidgetPayload } from "../types.ts";
 import { widgets } from "../widgets";
-import { useStableHandler } from "../utils.ts";
 import styles from "./widget-container.module.css";
+import { useWidgetRenderProps } from "./use-widget-render-props.tsx";
+import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
 
 export const WidgetContainer: FC<{
+  widgetId: string;
   payload: WidgetPayload;
   deleteWidget: () => void;
-  updateConfig: (config: any) => void;
-}> = ({ payload, deleteWidget, updateConfig }) => {
-  const widget = widgets[payload.type];
-  const DisplayComponent = widget.displayComponent;
-  const ConfigComponent = widget.configComponent;
+  updateWidgetConfig: (widgetId: string, config: any) => void;
+  dashboard: ReturnType<typeof useManagedDashboardData>;
+}> = ({ dashboard, widgetId }) => {
+  const widget = dashboard.data!.widgets[widgetId];
+  const widgetDef = widgets[widget.type];
+  const DisplayComponent = widgetDef.displayComponent;
 
-  let onOpenEditModal: WidgetRenderProps<any>["onOpenEditModal"] | null = null;
-
-  const renderProps = useMemo<WidgetRenderProps<any>>(
-    () => ({
-      config: payload.config,
-      onChange: updateConfig,
-      onOpenEditModal: onOpenEditModal!,
-    }),
-    [onOpenEditModal, payload, updateConfig],
-  );
-
-  onOpenEditModal = useStableHandler(() => {
-    modals.open({
-      title: "Edit widget",
-      children: <ConfigComponent {...renderProps} />,
-    });
-  });
+  const renderProps = useWidgetRenderProps(widgetId, dashboard);
 
   return (
     <Card
@@ -69,7 +66,7 @@ export const WidgetContainer: FC<{
             <IconGripVertical style={{ width: rem(16), height: rem(16) }} />
           </ActionIcon>
 
-          {widget.iconActions?.map((action) => {
+          {widgetDef.iconActions?.map((action) => {
             if (action.skip?.(renderProps)) return null;
             return (
               <ActionIcon
@@ -93,7 +90,7 @@ export const WidgetContainer: FC<{
             </Menu.Target>
 
             <Menu.Dropdown>
-              {widget.menuActions?.map((action) => {
+              {widgetDef.menuActions?.map((action) => {
                 if (action.skip?.(renderProps)) return null;
                 return (
                   <Menu.Item
@@ -106,14 +103,17 @@ export const WidgetContainer: FC<{
                 );
               })}
 
-              <Menu.Item leftSection={<IconPencil />} onClick={onOpenEditModal}>
+              <Menu.Item
+                leftSection={<IconPencil />}
+                onClick={renderProps.onOpenEditModal}
+              >
                 Configure Widget
               </Menu.Item>
 
               <Menu.Item
                 leftSection={<IconTrash />}
                 color="red"
-                onClick={deleteWidget}
+                onClick={() => dashboard.deleteWidget(widgetId)}
               >
                 Delete Widget
               </Menu.Item>
@@ -122,7 +122,18 @@ export const WidgetContainer: FC<{
         </Group>
       </Flex>
       <div style={{ height: "100%" }}>
-        <DisplayComponent {...renderProps} />
+        {renderProps.referenceResolved ? (
+          <DisplayComponent {...renderProps} />
+        ) : (
+          <Center h="100%">
+            <Stack>
+              <Text>This widget needs to reference another widget</Text>
+              <Button onClick={renderProps.onOpenEditModal}>
+                Configure widget
+              </Button>
+            </Stack>
+          </Center>
+        )}
       </div>
     </Card>
   );

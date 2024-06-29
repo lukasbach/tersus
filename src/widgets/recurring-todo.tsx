@@ -1,15 +1,17 @@
-import { Center, TextInput } from "@mantine/core";
+import { Center } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import ReactTimeAgo from "react-time-ago";
 import { WidgetDefinition } from "../types.ts";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
 import { Stat } from "../components/atoms/stat.tsx";
 
-export const recurringTodoWidget: WidgetDefinition<{
-  title: string;
-  lastDone: null | number;
-  frequency: number;
-}> = {
+export const recurringTodoWidget: WidgetDefinition<
+  {
+    lastDone: null | number;
+    frequency: number;
+  },
+  undefined
+> = {
   name: "Recurring Todo",
   default: {
     lastDone: null,
@@ -37,20 +39,12 @@ export const recurringTodoWidget: WidgetDefinition<{
     },
   ],
   configComponent: ({ config, onChange }) => (
-    <>
-      <TextInput
-        label="Counter title"
-        placeholder="Counter title"
-        defaultValue={config.title}
-        onChange={(event) => onChange({ title: event.currentTarget.value })}
-      />
-      <FrequencyInput
-        mt="xs"
-        label="Frequency"
-        value={config.frequency}
-        onChangeFrequency={(frequency) => onChange({ frequency })}
-      />
-    </>
+    <FrequencyInput
+      mt="xs"
+      label="Frequency"
+      value={config.frequency}
+      onChangeFrequency={(frequency) => onChange({ frequency })}
+    />
   ),
   iconComponent: () => <div>XXX</div>,
 };

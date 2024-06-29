@@ -1,10 +1,10 @@
-import { sampleWidget } from "./sample.tsx";
 import { WidgetDefinition } from "../types.ts";
 import { counterWidget } from "./counter.tsx";
 import { recurringTodoWidget } from "./recurring-todo.tsx";
+import { counterButtonsWidget } from "./counter-buttons.tsx";
 
 export const widgets = {
-  sampleWidget,
   counterWidget,
   recurringTodoWidget,
-} as Record<string, WidgetDefinition<any>>;
+  counterButtonsWidget,
+} as Record<string, WidgetDefinition<any, any>>;
