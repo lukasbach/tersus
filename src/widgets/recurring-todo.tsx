@@ -1,8 +1,9 @@
-import { Center, Stack, Text, TextInput } from "@mantine/core";
+import { Center, TextInput } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import ReactTimeAgo from "react-time-ago";
 import { WidgetDefinition } from "../types.ts";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
+import { Stat } from "../components/atoms/stat.tsx";
 
 export const recurringTodoWidget: WidgetDefinition<{
   title: string;
@@ -18,22 +19,14 @@ export const recurringTodoWidget: WidgetDefinition<{
   sizing: { w: 4, h: 2, minW: 2, minH: 2, maxW: 4, maxH: 4 },
   displayComponent: ({ config }) => (
     <Center h="100%">
-      <Stack align="start" gap="0">
-        <Text size="xs" color="gray">
-          {config.title}
-        </Text>
-        <Text
-          size="2rem"
-          fw="800"
-          color={
-            config.lastDone && config.lastDone < Date.now() - config.frequency
-              ? "red"
-              : undefined
-          }
-        >
-          {config.lastDone ? <ReactTimeAgo date={config.lastDone} /> : "Never"}
-        </Text>
-      </Stack>
+      <Stat
+        title={config.title}
+        alert={
+          !!config.lastDone && config.lastDone < Date.now() - config.frequency
+        }
+      >
+        {config.lastDone ? <ReactTimeAgo date={config.lastDone} /> : "Never"}
+      </Stat>
     </Center>
   ),
   iconActions: [

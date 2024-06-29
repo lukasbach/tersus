@@ -1,7 +1,8 @@
-import { Center, NumberFormatter, Stack, Text, TextInput } from "@mantine/core";
+import { Center, NumberFormatter, TextInput } from "@mantine/core";
 import { IconMinus, IconPlus, IconRotate } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { WidgetDefinition } from "../types.ts";
+import { Stat } from "../components/atoms/stat.tsx";
 
 export const counterWidget: WidgetDefinition<{ value: number; title: string }> =
   {
@@ -10,14 +11,9 @@ export const counterWidget: WidgetDefinition<{ value: number; title: string }> =
     sizing: { w: 4, h: 2, minW: 2, minH: 2, maxW: 4, maxH: 4 },
     displayComponent: ({ config }) => (
       <Center h="100%">
-        <Stack align="start" gap="0">
-          <Text size="xs" color="gray">
-            {config.title}
-          </Text>
-          <Text size="2rem" fw="800">
-            <NumberFormatter value={config.value} thousandSeparator />
-          </Text>
-        </Stack>
+        <Stat title={config.title}>
+          <NumberFormatter value={config.value} thousandSeparator />
+        </Stat>
       </Center>
     ),
     iconActions: [
