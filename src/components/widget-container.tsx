@@ -18,6 +18,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
+import { modals } from "@mantine/modals";
 import { widgets } from "../widgets";
 import { useWidgetRenderProps } from "./use-widget-render-props.tsx";
 import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
@@ -57,6 +58,8 @@ export const WidgetContainer: FC<{
         />
         {widgetDef.referencing && (
           <Select
+            withAsterisk
+            error={widgetDef.referencing && !widget.config.referencingId}
             label="Referencing widget"
             description={`This widget must reference a ${widgetDef.referencing.name} widget, on which it acts.`}
             placeholder="Pick a widget"
@@ -143,7 +146,14 @@ export const WidgetContainer: FC<{
                 <Menu.Item
                   leftSection={<IconTrash />}
                   color="red"
-                  onClick={() => dashboard.deleteWidget(widgetId)}
+                  onClick={() =>
+                    modals.openConfirmModal({
+                      title: "Delete widget",
+                      children: "Are you sure you want to delete this widget?",
+                      labels: { cancel: "Cancel", confirm: "Delete widget" },
+                      onConfirm: () => dashboard.deleteWidget(widgetId),
+                    })
+                  }
                 >
                   Delete Widget
                 </Menu.Item>

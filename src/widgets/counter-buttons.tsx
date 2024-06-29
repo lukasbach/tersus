@@ -24,7 +24,16 @@ export const counterButtonsWidget: WidgetDefinition<
 > = {
   referencing: counterWidget,
   name: "Counter Buttons",
-  default: { title: "Counter", buttons: [], columns: 2 },
+  default: {
+    title: "Counter",
+    buttons: [
+      { key: "a", text: "Add 1", value: 1 },
+      { key: "b", text: "Subtract 1", value: -1 },
+      { key: "c", text: "Add 5", value: 5 },
+      { key: "d", text: "Subtract 5", value: -5 },
+    ],
+    columns: 2,
+  },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
   displayComponent: ({ config, referencing }) => (
     <Grid>
