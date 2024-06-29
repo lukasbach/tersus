@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { PayloadOfWidgetDefinition, WidgetDefinition } from "../types.ts";
-import { counterWidget } from "./counter.tsx";
+import { applyCounterChange, counterWidget } from "./counter.tsx";
 import { FieldList } from "../components/atoms/field-list.tsx";
 import { randId } from "../utils.ts";
 
@@ -43,9 +43,12 @@ export const counterButtonsWidget: WidgetDefinition<
             fullWidth
             variant="light"
             onClick={() => {
-              referencing?.onChange({
-                value: referencing.config.value + button.value,
-              });
+              if (!referencing) return;
+              applyCounterChange(
+                referencing.config,
+                referencing.onChange,
+                button.value,
+              );
             }}
           >
             {button.text}

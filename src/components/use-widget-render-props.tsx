@@ -11,12 +11,14 @@ export const useWidgetRenderProps = (
   const widget = dashboard.data!.widgets[widgetId];
   const widgetDef = widgets[widget.type];
   const referenceResolved =
-    !widgetDef.referencing || widget.config.referencingId;
+    !widgetDef.referencing ||
+    (widget.config.referencingId &&
+      dashboard.data?.widgets[widget.config.referencingId]);
 
   const props = useMemo<WidgetRenderProps<any, any>>(() => {
     const referencingConfig =
       widget.config.referencingId &&
-      dashboard.data?.widgets[widget.config.referencingId].config;
+      dashboard.data?.widgets[widget.config.referencingId]?.config;
     return {
       config: widget.config,
       onChange: (cfg) => dashboard.updateWidgetConfig(widgetId, cfg),
