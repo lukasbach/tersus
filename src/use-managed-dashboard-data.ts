@@ -3,8 +3,9 @@ import { Layouts } from "react-grid-layout";
 import { useDebouncedEffect } from "@react-hookz/web";
 import { useWindowEvent } from "@mantine/hooks";
 import { updateDashboard, useDashboardData } from "./firebase/app.ts";
-import { DashboardConfig, WidgetDefinition } from "./types.ts";
+import { DashboardConfig } from "./types.ts";
 import { randId, removeUndefinedValues, useStableHandler } from "./utils.ts";
+import { widgets } from "./widgets";
 
 export const useManagedDashboardData = (id: string) => {
   const [loadedData] = useDashboardData(id);
@@ -49,7 +50,8 @@ export const useManagedDashboardData = (id: string) => {
     },
   );
 
-  const addWidget = useStableHandler((widget: WidgetDefinition<any>) => {
+  const addWidget = useStableHandler((widgetType: string) => {
+    const widget = widgets[widgetType];
     if (!currentData) return;
     const id = randId();
     for (const layoutKey of Object.keys(currentData.layouts)) {
@@ -70,7 +72,7 @@ export const useManagedDashboardData = (id: string) => {
         ...currentData.widgets,
         [id]: {
           config: {},
-          widget: widget.type,
+          type: widgetType,
         },
       },
     });

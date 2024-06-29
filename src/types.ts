@@ -2,7 +2,6 @@ import { Layout, Layouts } from "react-grid-layout";
 import { ComponentType } from "react";
 
 export type WidgetDefinition<T> = {
-  type: string;
   name: string;
   sizing: Partial<Layout>;
   configComponent: ComponentType<{
@@ -19,7 +18,7 @@ export type WidgetDefinition<T> = {
 
 export type WidgetPayload<T = any> = {
   config: T;
-  widget: string;
+  type: string;
 };
 
 export type DashboardConfig = {

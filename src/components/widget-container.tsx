@@ -1,15 +1,30 @@
 import { FC } from "react";
 import { ActionIcon, Card, Group, Menu, Text, rem } from "@mantine/core";
-import { IconDots, IconTrash } from "@tabler/icons-react";
+import { IconDots, IconPencil, IconTrash } from "@tabler/icons-react";
+import { modals } from "@mantine/modals";
 import { WidgetPayload } from "../types.ts";
+import { widgets } from "../widgets";
+import { useStableHandler } from "../utils.ts";
 
 export const WidgetContainer: FC<{
-  widget: WidgetPayload;
+  payload: WidgetPayload;
   deleteWidget: () => void;
-}> = ({ widget, deleteWidget }) => {
+  updateConfig: (config: any) => void;
+}> = ({ payload, deleteWidget, updateConfig }) => {
+  const widget = widgets[payload.type];
+  const DisplayComponent = widget.displayComponent;
+  const ConfigComponent = widget.configComponent;
+
+  const onEdit = useStableHandler(() => {
+    modals.open({
+      title: "Edit widget",
+      children: <ConfigComponent config={payload} onChange={updateConfig} />,
+    });
+  });
+
   return (
     <Card withBorder shadow="sm" radius="md" w="100%" h="100%">
-      <Card.Section withBorder inheritPadding py="xs">
+      <Card.Section withBorder inheritPadding py="2px">
         <Group justify="space-between">
           <Text className="draghandle" fw={500}>
             Review pictures
@@ -22,6 +37,10 @@ export const WidgetContainer: FC<{
             </Menu.Target>
 
             <Menu.Dropdown>
+              <Menu.Item leftSection={<IconPencil />} onClick={onEdit}>
+                Configure Widget
+              </Menu.Item>
+
               <Menu.Item
                 leftSection={<IconTrash />}
                 color="red"
@@ -33,7 +52,13 @@ export const WidgetContainer: FC<{
           </Menu>
         </Group>
       </Card.Section>
-      <div>hello</div>
+      <div>
+        <DisplayComponent
+          config={payload}
+          onChange={updateConfig}
+          onEdit={onEdit}
+        />
+      </div>
     </Card>
   );
 };

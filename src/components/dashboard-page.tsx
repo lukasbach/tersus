@@ -13,6 +13,7 @@ export const DashboardPage: FC = () => {
   const dashboard = useManagedDashboardData(id);
 
   if (!dashboard.data) return null;
+  console.log("Dashboard data", dashboard.data);
 
   return (
     <AppShell
@@ -25,12 +26,12 @@ export const DashboardPage: FC = () => {
     >
       <AppShell.Header>Hello</AppShell.Header>
       <AppShell.Navbar p="md">
-        {widgets.map((widget) => {
+        {Object.entries(widgets).map(([widgetType, widget]) => {
           return (
             <Button
-              key={widget.type}
+              key={widgetType}
               onClick={() => {
-                dashboard.addWidget(widget);
+                dashboard.addWidget(widgetType);
               }}
             >
               {widget.name}
@@ -45,15 +46,18 @@ export const DashboardPage: FC = () => {
           onLayoutChange={dashboard.onLayoutChange}
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
           cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-          rowHeight={80}
+          rowHeight={60}
           draggableHandle=".draghandle"
         >
           {Object.entries(dashboard.data.widgets).map(([id, widget]) => (
             <div key={id}>
               <WidgetContainer
                 key={id}
-                widget={widget}
+                payload={widget}
                 deleteWidget={() => dashboard.deleteWidget(id)}
+                updateConfig={(config) =>
+                  dashboard.updateWidgetConfig(id, config)
+                }
               />
             </div>
           ))}
