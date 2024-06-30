@@ -8,6 +8,7 @@ import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import { Box, Stack } from "@mantine/core";
 import {
+  IconNote,
   IconPencil,
   IconPencilOff,
   IconSquareRounded,
@@ -20,6 +21,13 @@ export const notesWidget: WidgetDefinition<
   undefined
 > = {
   name: "Notes",
+  IconComponent: IconNote,
+  label: "A simple notes editor",
+  description: [
+    "This widget allows you to write and format text.",
+    "The editor supports rich-text formatting.",
+    "You can toggle the toolbar and the ability to edit the text.",
+  ],
   default: {
     title: "Widget Name",
     content: "",
@@ -140,5 +148,4 @@ export const notesWidget: WidgetDefinition<
         ),
     },
   ],
-  IconComponent: () => <div>XXX</div>,
 };

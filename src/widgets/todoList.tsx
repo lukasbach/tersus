@@ -40,6 +40,13 @@ export const todoListWidget: WidgetDefinition<
   undefined
 > = {
   name: "Todo List",
+  IconComponent: IconSquareRoundedCheck,
+  label: "Keeps track of a list of tasks",
+  description: [
+    "This widget allows you to keep track of a list of tasks.",
+    "You can add new tasks, mark them as done, and set a due date for them.",
+    "The widget shows you how many tasks are done and how many are left.",
+  ],
   default: {
     title: "Todo List",
     hideCompleted: false,
@@ -209,5 +216,4 @@ export const todoListWidget: WidgetDefinition<
         ),
     },
   ],
-  IconComponent: () => <div>XXX</div>,
 };

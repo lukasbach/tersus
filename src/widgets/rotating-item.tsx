@@ -1,5 +1,9 @@
 import { Center, TextInput, Textarea } from "@mantine/core";
-import { IconArrowLeft, IconArrowsRandom } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconArrowsRandom,
+  IconUsers,
+} from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
 import { Stat } from "../components/atoms/stat.tsx";
 import { randomInteger } from "../utils.ts";
@@ -9,6 +13,13 @@ export const rotatingItemWidget: WidgetDefinition<
   undefined
 > = {
   name: "Rotating Item",
+  IconComponent: IconUsers,
+  label: "Keep a list of items to rotate through",
+  description: [
+    "This widget allows you to keep a list of items and rotate through them.",
+    "You can pick the next item manually or let the widget pick one randomly, while keeping track of the last item that was picked.",
+    "You can use this to keep a list of people and rotate through them for chores, keep a list of recipes you want to try and rotate through, or keep a list of exercises to rotate through for your workout.",
+  ],
   default: {
     title: "Widget Name",
     itemName: "Person to cleanup",
@@ -85,5 +96,4 @@ export const rotatingItemWidget: WidgetDefinition<
         }),
     },
   ],
-  IconComponent: () => <div>XXX</div>,
 };

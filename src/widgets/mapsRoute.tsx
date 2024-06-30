@@ -1,4 +1,5 @@
 import { Center, TextInput } from "@mantine/core";
+import { IconMapRoute } from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
 
 export const mapsRouteWidget: WidgetDefinition<
@@ -6,6 +7,12 @@ export const mapsRouteWidget: WidgetDefinition<
   undefined
 > = {
   name: "Maps Route",
+  IconComponent: IconMapRoute,
+  label: "Displays a map with a predefined route",
+  description: [
+    "Display an Google Maps Embed with a predefined route.",
+    "This can be used to see the current travel time and best route between two locations, such as your home and work.",
+  ],
   default: {
     title: "Widget Name",
     from: "Karlsruhe, Germany",
@@ -42,5 +49,4 @@ export const mapsRouteWidget: WidgetDefinition<
       />
     </>
   ),
-  IconComponent: () => <div>XXX</div>,
 };

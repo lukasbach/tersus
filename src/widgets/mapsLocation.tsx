@@ -1,4 +1,5 @@
 import { Center, TextInput } from "@mantine/core";
+import { IconMap2 } from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
 
 export const mapsLocationWidget: WidgetDefinition<
@@ -6,6 +7,9 @@ export const mapsLocationWidget: WidgetDefinition<
   undefined
 > = {
   name: "Maps Location",
+  IconComponent: IconMap2,
+  label: "Displays a map with a location",
+  description: ["Display an Google Maps Embed with a highlighted location"],
   default: {
     title: "Widget Name",
     location: "Karlsruhe Institut of Technology, Germany",
@@ -34,5 +38,4 @@ export const mapsLocationWidget: WidgetDefinition<
       onChange={(e) => onChange({ location: e.currentTarget.value })}
     />
   ),
-  IconComponent: () => <div>XXX</div>,
 };

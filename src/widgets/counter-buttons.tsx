@@ -7,6 +7,7 @@ import {
   NumberInput,
   TextInput,
 } from "@mantine/core";
+import { IconExposurePlus2 } from "@tabler/icons-react";
 import { PayloadOfWidgetDefinition, WidgetDefinition } from "../types.ts";
 import { applyCounterChange, counterWidget } from "./counter.tsx";
 import { FieldList } from "../components/atoms/field-list.tsx";
@@ -24,6 +25,12 @@ export const counterButtonsWidget: WidgetDefinition<
 > = {
   referencing: counterWidget,
   name: "Counter Buttons",
+  IconComponent: IconExposurePlus2,
+  label: "Expands a counter widget with buttons to change the count",
+  description: [
+    "This widget allows you to add buttons to a counter widget to change the count by a specified amount.",
+    "You can customize the buttons and the count they change by in the widget settings.",
+  ],
   default: {
     title: "Counter",
     buttons: [
@@ -115,5 +122,4 @@ export const counterButtonsWidget: WidgetDefinition<
       />
     </>
   ),
-  IconComponent: () => <div>XXX</div>,
 };

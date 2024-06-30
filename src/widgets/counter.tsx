@@ -1,5 +1,5 @@
 import { Center, NumberFormatter } from "@mantine/core";
-import { IconMinus, IconPlus, IconRotate } from "@tabler/icons-react";
+import { Icon123, IconMinus, IconPlus, IconRotate } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { WidgetDefinition } from "../types.ts";
 import { Stat } from "../components/atoms/stat.tsx";
@@ -33,6 +33,12 @@ export const applyCounterChange = (
 
 export const counterWidget: WidgetDefinition<Payload, undefined> = {
   name: "Simple Counter",
+  IconComponent: Icon123,
+  label: "A counter widget to keep track of a number",
+  description: [
+    "This widget allows you to keep track of a number and increment or decrement it.",
+    "You can expand the counter with the counter-graph widget to visualize historical data of your count, or with the counter-buttons widget to have customizable count-buttons.",
+  ],
   default: {
     value: 0,
     title: "Counter",
@@ -73,5 +79,4 @@ export const counterWidget: WidgetDefinition<Payload, undefined> = {
         }),
     },
   ],
-  IconComponent: () => <div>XXX</div>,
 };

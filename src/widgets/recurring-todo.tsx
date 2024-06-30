@@ -1,5 +1,5 @@
 import { Center } from "@mantine/core";
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck, IconClockHour8 } from "@tabler/icons-react";
 import ReactTimeAgo from "react-time-ago";
 import { WidgetDefinition } from "../types.ts";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
@@ -13,6 +13,12 @@ export const recurringTodoWidget: WidgetDefinition<
   undefined
 > = {
   name: "Recurring Todo",
+  IconComponent: IconClockHour8,
+  label: "Reminds you to do a task regularly",
+  description: [
+    "This widget reminds you to do a task regularly.",
+    "It shows you when you last did the task and how long it has been since then, and highlights the widget if a custom frequency has passed since the last time you did the task.",
+  ],
   default: {
     lastDone: null,
     frequency: 1000 * 60 * 60 * 24 * 7,
@@ -46,5 +52,4 @@ export const recurringTodoWidget: WidgetDefinition<
       onChangeFrequency={(frequency) => onChange({ frequency })}
     />
   ),
-  IconComponent: () => <div>XXX</div>,
 };

@@ -1,5 +1,6 @@
 import { AreaChart } from "@mantine/charts";
 import { useMemo } from "react";
+import { IconChartLine } from "@tabler/icons-react";
 import { PayloadOfWidgetDefinition, WidgetDefinition } from "../types.ts";
 import { HistoryItem, counterWidget } from "./counter.tsx";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
@@ -55,6 +56,12 @@ export const counterGraphWidget: WidgetDefinition<
 > = {
   referencing: counterWidget,
   name: "Counter History Graph",
+  IconComponent: IconChartLine,
+  label: "Visualizes the history of a counter widget",
+  description: [
+    "This widget visualizes the history of a counter widget over time.",
+    "You can customize how far back the graph should go in the widget settings.",
+  ],
   default: {
     title: "History",
     goingBack: 10000,
@@ -91,5 +98,4 @@ export const counterGraphWidget: WidgetDefinition<
       onChangeFrequency={(goingBack) => onChange({ goingBack })}
     />
   ),
-  IconComponent: () => <div>XXX</div>,
 };

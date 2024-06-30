@@ -27,12 +27,14 @@ type WidgetAction<T, R> = {
 
 export type WidgetDefinition<T, R> = {
   name: string;
+  label: string;
+  description: string[];
   referencing?: WidgetDefinition<R, any>;
   sizing: Partial<Layout>;
   default: T & Pick<DefaultConfig, "title">;
   ConfigComponent?: ComponentType<WidgetRenderProps<T, R>>;
   DisplayComponent: ComponentType<WidgetRenderProps<T, R>>;
-  IconComponent: ComponentType<WidgetRenderProps<T, R>>;
+  IconComponent: ComponentType<{}>;
   iconActions?: WidgetAction<T, R>[];
   menuActions?: WidgetAction<T, R>[];
 };
