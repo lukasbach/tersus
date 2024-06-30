@@ -11,9 +11,9 @@ import { rotatingItemWidget } from "./rotating-item.tsx";
 
 export const widgets = {
   counterWidget,
-  recurringTodoWidget,
-  counterButtonsWidget,
   counterGraphWidget,
+  counterButtonsWidget,
+  recurringTodoWidget,
   todoListWidget,
   notesWidget,
   mapsRouteWidget,
