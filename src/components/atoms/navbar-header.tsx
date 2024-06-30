@@ -3,6 +3,7 @@ import {
   ActionIcon,
   Button,
   Group,
+  Menu,
   Text,
   UnstyledButton,
   useMantineColorScheme,
@@ -15,8 +16,11 @@ import {
   IconTablePlus,
 } from "@tabler/icons-react";
 import { createDashboard } from "../../firebase/app.ts";
+import { RecentDashboardsMenu } from "./recent-dashboards-menu.tsx";
 
-export const NavbarHeader: FC<PropsWithChildren> = ({ children }) => {
+export const NavbarHeader: FC<
+  PropsWithChildren<{ currentDashboardId: string }>
+> = ({ children, currentDashboardId }) => {
   const { toggleColorScheme, colorScheme } = useMantineColorScheme();
   return (
     <Group gap="xs">
@@ -28,7 +32,12 @@ export const NavbarHeader: FC<PropsWithChildren> = ({ children }) => {
           </Text>
         </Group>
       </UnstyledButton>
-      <Button variant="default">Recent Dashboards</Button>
+      <Menu shadow="md">
+        <Menu.Target>
+          <Button variant="default">Recent Dashboards</Button>
+        </Menu.Target>
+        <RecentDashboardsMenu currentDashboardId={currentDashboardId} />
+      </Menu>
       <ActionIcon size="lg" variant="default" radius="md">
         <IconBrandGithub />
       </ActionIcon>

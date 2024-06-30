@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import {
   AppShell,
@@ -19,6 +19,7 @@ import { WidgetContainer } from "./widget-container.tsx";
 import { AddWidgetBtn } from "./atoms/add-widget-btn.tsx";
 import { NavbarHeader } from "./atoms/navbar-header.tsx";
 import { ConfigureDashboardMenu } from "./atoms/configure-dashboard-menu.tsx";
+import { useDashboardList } from "../use-dashboard-list.ts";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -27,6 +28,12 @@ export const DashboardPage: FC = () => {
   const [breakpoint, setBreakpoint] = useState("lg");
   const dashboard = useManagedDashboardData(id);
   const [widgetDrawerOpen, widgetDrawer] = useDisclosure(false);
+  const { addRecent } = useDashboardList();
+
+  useEffect(() => {
+    if (!dashboard.data) return;
+    addRecent({ title: dashboard.data.title, id });
+  }, [addRecent, dashboard.data, id]);
 
   if (!dashboard.data) return null;
 
@@ -34,7 +41,7 @@ export const DashboardPage: FC = () => {
     <AppShell header={{ height: 60 }}>
       <AppShell.Header>
         <Flex h="100%" align="center" justify="space-between" p="lg">
-          <NavbarHeader />
+          <NavbarHeader currentDashboardId={id} />
           <Box>
             <Text fw="600">{dashboard.data.title}</Text>
           </Box>
@@ -53,7 +60,7 @@ export const DashboardPage: FC = () => {
                   Configure
                 </Button>
               </Menu.Target>
-              <ConfigureDashboardMenu dashboard={dashboard} />
+              <ConfigureDashboardMenu dashboard={dashboard} dashboardId={id} />
             </Menu>
           </Group>
         </Flex>

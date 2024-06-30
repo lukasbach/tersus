@@ -1,15 +1,37 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { Menu } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { promptText } from "../../modal-utils.tsx";
 import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
 import { createDashboard } from "../../firebase/app.ts";
+import { useDashboardList } from "../../use-dashboard-list.ts";
 
 export const ConfigureDashboardMenu: FC<{
   dashboard: ReturnType<typeof useManagedDashboardData>;
-}> = ({ dashboard }) => {
+  dashboardId: string;
+}> = ({ dashboard, dashboardId }) => {
+  const list = useDashboardList();
+  const isStarred = useMemo(
+    () => list.starred.some((d) => d.id === dashboardId),
+    [dashboardId, list.starred],
+  );
   return (
     <Menu.Dropdown>
+      <Menu.Item
+        onClick={() => {
+          if (isStarred) {
+            list.removeStarred(dashboardId);
+          } else {
+            list.addStarred({
+              id: dashboardId,
+              title: dashboard.data?.title ?? "",
+            });
+          }
+        }}
+      >
+        {isStarred ? "Unpin Dashboard" : "Pin Dashboard"}
+      </Menu.Item>
+
       <Menu.Item
         onClick={() =>
           promptText({

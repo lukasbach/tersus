@@ -25,6 +25,11 @@ const App = () => {
         primaryColor: "indigo",
         autoContrast: true,
         components: {
+          Button: {
+            defaultProps: {
+              radius: "md",
+            },
+          },
           TextInput: {
             defaultProps: { size: "sm" },
             styles: {

@@ -15,7 +15,7 @@ export const HomePage: FC = () => {
           title: "My new dashboard",
           lastEdit: Date.now(),
         });
-        navigate({ to: boardViewRoute.path, params: { id } });
+        navigate({ to: boardViewRoute.fullPath, params: { id } });
       }}
     >
       Create Dashboard
