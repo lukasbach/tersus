@@ -6,10 +6,10 @@ export const Stat: FC<
 > = ({ alert, title, children }) => {
   return (
     <Stack align="start" gap="0">
-      <Text size="xs" color="gray">
+      <Text size="xs" c="dimmed">
         {title}
       </Text>
-      <Text size="2rem" fw="800" color={alert ? "red" : undefined}>
+      <Text size="2rem" fw="800" c={alert ? "red" : undefined}>
         {children}
       </Text>
     </Stack>

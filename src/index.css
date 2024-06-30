@@ -2,3 +2,20 @@
     width: 14px;
     height: 14px;
 }
+
+:root {
+    @mixin light-root {
+        --board-bg: var(--mantine-color-gray-1);
+        --grid-placeholder-bg: var(--mantine-primary-color-4);
+    }
+
+    @mixin dark-root {
+        --board-bg: var(--mantine-color-dark-8);
+        --grid-placeholder-bg: var(--mantine-primary-color-4);
+    }
+}
+
+.react-grid-item.react-grid-placeholder {
+    background-color: var(--grid-placeholder-bg);
+    border-radius: var(--mantine-radius-md);
+}

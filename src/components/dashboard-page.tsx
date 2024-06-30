@@ -82,7 +82,7 @@ export const DashboardPage: FC = () => {
           );
         })}
       </Drawer>
-      <AppShell.Main bg="gray.1">
+      <AppShell.Main bg="var(--board-bg)">
         <ResponsiveGridLayout
           className="layout"
           layouts={dashboard.data.layouts}

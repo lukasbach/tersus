@@ -11,9 +11,9 @@
     display: inline-flex;
     align-items: center;
     position: absolute;
-    border: 1px solid var(--mantine-color-gray-3);
+    border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
     padding: 2px;
-    background: var(--mantine-color-gray-0);
+    background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
     border-radius: var(--mantine-radius-default);
     gap: 2px;
     z-index: var(--mantine-z-index-overlay);

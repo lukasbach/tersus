@@ -1,5 +1,5 @@
 import "./App.css";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, virtualColor } from "@mantine/core";
 import { RouterProvider } from "@tanstack/react-router";
 import { ModalsProvider } from "@mantine/modals";
 import TimeAgo from "javascript-time-ago";
@@ -19,6 +19,13 @@ const App = () => {
   return (
     <MantineProvider
       theme={{
+        colors: {
+          dashboardBackground: virtualColor({
+            name: "dashboardBackground",
+            light: "gray",
+            dark: "dark",
+          }),
+        },
         fontSizes: {
           md: ".9rem",
         },
