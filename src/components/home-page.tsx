@@ -9,7 +9,12 @@ export const HomePage: FC = () => {
   return (
     <Button
       onClick={async () => {
-        const { id } = await createDashboard({ widgets: {}, layouts: {} });
+        const { id } = await createDashboard({
+          widgets: {},
+          layouts: {},
+          title: "My new dashboard",
+          lastEdit: Date.now(),
+        });
         navigate({ to: boardViewRoute.path, params: { id } });
       }}
     >

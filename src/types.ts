@@ -48,6 +48,8 @@ export type WidgetPayload<T = any> = {
 };
 
 export type DashboardConfig = {
+  title: string;
+  lastEdit: number;
   layouts: Layouts;
   widgets: Record<string, WidgetPayload>;
 };

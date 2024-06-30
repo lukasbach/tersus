@@ -19,6 +19,7 @@ export const useManagedDashboardData = (id: string) => {
 
   const persist = useStableHandler(async () => {
     if (!currentData) return;
+    currentData.lastEdit = Date.now();
     console.log("Saving dashboard:", id, currentData);
     await updateDashboard(id, removeUndefinedValues(currentData));
   });
@@ -98,11 +99,18 @@ export const useManagedDashboardData = (id: string) => {
     });
   });
 
+  const updateDashboardData = useStableHandler(
+    (newData: Partial<DashboardConfig>) => {
+      setCurrentData((old) => (old ? { ...old, ...newData } : undefined));
+    },
+  );
+
   return {
     data: currentData,
     onLayoutChange,
     updateWidgetConfig,
     addWidget,
     deleteWidget,
+    updateDashboardData,
   };
 };

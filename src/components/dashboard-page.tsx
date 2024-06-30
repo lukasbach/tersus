@@ -7,16 +7,18 @@ import {
   Drawer,
   Flex,
   Group,
+  Menu,
   Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconAdjustments, IconPlus } from "@tabler/icons-react";
+import { IconAdjustments, IconSquareRoundedPlus } from "@tabler/icons-react";
 import { boardViewRoute } from "../router.tsx";
 import { widgets } from "../widgets";
 import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
 import { WidgetContainer } from "./widget-container.tsx";
 import { AddWidgetBtn } from "./atoms/add-widget-btn.tsx";
 import { NavbarHeader } from "./atoms/navbar-header.tsx";
+import { ConfigureDashboardMenu } from "./atoms/configure-dashboard-menu.tsx";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -34,19 +36,25 @@ export const DashboardPage: FC = () => {
         <Flex h="100%" align="center" justify="space-between" p="lg">
           <NavbarHeader />
           <Box>
-            <Text fw="600">My first dashboard</Text>
+            <Text fw="600">{dashboard.data.title}</Text>
           </Box>
           <Group>
             <Button
               radius="md"
               onClick={widgetDrawer.open}
-              leftSection={<IconPlus />}
+              leftSection={<IconSquareRoundedPlus />}
             >
               Add Widget
             </Button>
-            <Button radius="md" leftSection={<IconAdjustments />}>
-              Configure
-            </Button>
+
+            <Menu shadow="md" width={200}>
+              <Menu.Target>
+                <Button radius="md" leftSection={<IconAdjustments />}>
+                  Configure
+                </Button>
+              </Menu.Target>
+              <ConfigureDashboardMenu dashboard={dashboard} />
+            </Menu>
           </Group>
         </Flex>
       </AppShell.Header>

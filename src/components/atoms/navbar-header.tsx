@@ -12,7 +12,9 @@ import {
   IconLayoutBoard,
   IconMoon,
   IconSun,
+  IconTablePlus,
 } from "@tabler/icons-react";
+import { createDashboard } from "../../firebase/app.ts";
 
 export const NavbarHeader: FC<PropsWithChildren> = ({ children }) => {
   const { toggleColorScheme, colorScheme } = useMantineColorScheme();
@@ -38,6 +40,22 @@ export const NavbarHeader: FC<PropsWithChildren> = ({ children }) => {
       >
         {colorScheme !== "dark" ? <IconMoon /> : <IconSun />}
       </ActionIcon>
+      <Button
+        variant="subtle"
+        leftSection={<IconTablePlus />}
+        onClick={async () => {
+          // TODO Default dashboard
+          const { id } = await createDashboard({
+            widgets: {},
+            layouts: {},
+            title: `My new dashboard`,
+            lastEdit: Date.now(),
+          });
+          window.open(`#/board/${id}`, "_blank");
+        }}
+      >
+        Create Dashboard
+      </Button>
       {children}
     </Group>
   );
