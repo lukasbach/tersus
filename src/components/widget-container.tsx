@@ -107,6 +107,20 @@ export const WidgetContainer: FC<{
 
             {widgetDef.iconActions?.map((action) => {
               if (action.skip?.(renderProps)) return null;
+              if (typeof action.icon === "string") {
+                return (
+                  <Button
+                    key={action.text}
+                    variant="subtle"
+                    color="gray"
+                    onClick={() => action.action(renderProps)}
+                    size="compact-sm"
+                  >
+                    {action.icon}
+                  </Button>
+                );
+              }
+
               return (
                 <ActionIcon
                   key={action.text}
@@ -114,7 +128,6 @@ export const WidgetContainer: FC<{
                   color="gray"
                   onClick={() => action.action(renderProps)}
                   aria-label={action.text}
-                  style={{ cursor: "pointer" }}
                 >
                   {action.icon && <action.icon {...renderProps} />}
                 </ActionIcon>

@@ -9,6 +9,7 @@
     top: 5px;
     right: 5px;
     display: inline-flex;
+    align-items: center;
     position: absolute;
     border: 1px solid var(--mantine-color-gray-3);
     padding: 2px;

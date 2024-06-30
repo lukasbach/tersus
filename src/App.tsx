@@ -11,6 +11,7 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import "@mantine/tiptap/styles.css";
 
 TimeAgo.addDefaultLocale(en);
 

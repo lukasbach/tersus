@@ -45,3 +45,6 @@ export const removeUndefinedValues = <T>(v: T): T => {
 };
 
 export const randId = () => Math.random().toString(36).substr(2, 9);
+
+export const randomInteger = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;

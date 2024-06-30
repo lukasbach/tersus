@@ -6,7 +6,7 @@ export const sampleWidget: WidgetDefinition<{}, undefined> = {
   default: {
     title: "Widget Name",
   },
-  sizing: { w: 4, h: 2, minW: 2, minH: 2, maxW: 4, maxH: 4 },
+  sizing: { w: 4, h: 2, minW: 2, minH: 2 },
   DisplayComponent: ({}) => <Center h="100%">Hello</Center>,
   IconComponent: () => <div>XXX</div>,
 };
