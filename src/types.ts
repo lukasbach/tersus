@@ -50,6 +50,8 @@ export type WidgetPayload<T = any> = {
 export type DashboardConfig = {
   title: string;
   lastEdit: number;
+  createdAt: number;
+  editedAfterWeek: boolean;
   layouts: Layouts;
   widgets: Record<string, WidgetPayload>;
 };

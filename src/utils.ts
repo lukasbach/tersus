@@ -29,6 +29,9 @@ export const useStableHandler = <T extends (...args: any[]) => any>(
 };
 
 export const removeUndefinedValues = <T>(v: T): T => {
+  if (v === null || v === undefined) {
+    return null as any;
+  }
   if (typeof v !== "object") {
     return v;
   }

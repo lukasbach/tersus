@@ -69,6 +69,7 @@ export const DashboardPage: FC = () => {
         opened={widgetDrawerOpen}
         onClose={widgetDrawer.close}
         position="right"
+        title="Add a widget..."
       >
         {Object.keys(widgets).map((widgetType) => {
           return (

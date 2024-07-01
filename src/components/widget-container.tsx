@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import {
   ActionIcon,
   Button,
@@ -25,7 +25,7 @@ import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
 import { FloatingBarContainer } from "./atoms/floating-bar-container.tsx";
 import { FloatingBar } from "./atoms/floating-bar.tsx";
 
-export const WidgetContainer: FC<{
+const WidgetContainerInner: FC<{
   widgetId: string;
   dashboard: ReturnType<typeof useManagedDashboardData>;
   breakpoint: string;
@@ -200,3 +200,5 @@ export const WidgetContainer: FC<{
     </>
   );
 };
+
+export const WidgetContainer = memo(WidgetContainerInner);

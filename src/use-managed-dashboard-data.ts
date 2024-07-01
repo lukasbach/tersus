@@ -12,24 +12,34 @@ export const useManagedDashboardData = (id: string) => {
   const [currentData, setCurrentData] = useState<DashboardConfig | undefined>();
 
   useEffect(() => {
-    if (loadedData) {
+    if (loadedData && !currentData) {
+      console.log("Loaded data");
       setCurrentData(loadedData.data());
     }
-  }, [loadedData]);
+  }, [currentData, loadedData]);
 
   const persist = useStableHandler(async () => {
     if (!currentData) return;
-    currentData.lastEdit = Date.now();
     console.log("Saving dashboard:", id, currentData);
-    await updateDashboard(id, removeUndefinedValues(currentData));
+    const lastEdit = Date.now();
+    await updateDashboard(
+      id,
+      removeUndefinedValues({
+        ...currentData,
+        lastEdit,
+        editedAfterWeek:
+          lastEdit - currentData.createdAt > 7 * 24 * 60 * 60 * 1000,
+      }),
+    );
   });
 
-  useDebouncedEffect(persist, [currentData], 3000, 10000);
+  useDebouncedEffect(persist, [currentData], 4000, 20000);
   useWindowEvent("pagehide", persist);
   useWindowEvent("beforeunload", persist);
 
   const onLayoutChange = useStableHandler((_, layouts: Layouts) => {
     if (!currentData) return;
+    console.log("Layout change");
     setCurrentData({
       ...currentData,
       layouts,

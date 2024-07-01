@@ -40,7 +40,12 @@ export const useDashboardData = (id: string | null) =>
   useDocument<DashboardConfig>(id ? getDashboardDoc(id) : null);
 
 export const createDashboard = (dashboard: DashboardConfig) =>
-  addDoc(dashboardsCollection, dashboard);
+  addDoc(dashboardsCollection, {
+    ...dashboard,
+    lastEdit: Date.now(),
+    createdAt: Date.now(),
+    editedAfterWeek: false,
+  });
 
 export const deleteDashboard = (id: string) => deleteDoc(getDashboardDoc(id));
 export const updateDashboard = (id: string, data: DashboardConfig) =>

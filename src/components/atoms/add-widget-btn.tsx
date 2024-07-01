@@ -16,7 +16,7 @@ export const AddWidgetBtn: FC<{ widgetType: string; onClick: () => void }> = ({
           </Box>
           <Stack gap="xs">
             <Text fw="600">{widget.name}</Text>
-            <Text color="gray">{widget.label}</Text>
+            <Text c="dimmed">{widget.label}</Text>
           </Stack>
         </Flex>
       </Paper>
