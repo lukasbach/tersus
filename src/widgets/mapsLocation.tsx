@@ -6,7 +6,7 @@ export const mapsLocationWidget: WidgetDefinition<
   { location: string },
   undefined
 > = {
-  name: "",
+  name: "Maps Location",
   IconComponent: IconMap2,
   label: "Displays a map with a location",
   description: ["Display an Google Maps Embed with a highlighted location"],

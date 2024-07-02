@@ -6,7 +6,7 @@ export const mapsRouteWidget: WidgetDefinition<
   { from: string; to: string },
   undefined
 > = {
-  name: "",
+  name: "Maps Route",
   IconComponent: IconMapRoute,
   label: "Displays a map with a predefined route",
   description: [
@@ -14,7 +14,7 @@ export const mapsRouteWidget: WidgetDefinition<
     "This can be used to see the current travel time and best route between two locations, such as your home and work.",
   ],
   default: {
-    title: "Widget Name",
+    title: "",
     from: "Karlsruhe, Germany",
     to: "Stuttgart, Germany",
   },
