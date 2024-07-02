@@ -3,6 +3,7 @@ import { Icon123, IconMinus, IconPlus, IconRotate } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { WidgetDefinition } from "../types.ts";
 import { Stat } from "../components/atoms/stat.tsx";
+import { visualRound } from "../utils.ts";
 
 export type HistoryItem = {
   from: number;
@@ -41,16 +42,20 @@ export const counterWidget: WidgetDefinition<Payload, undefined> = {
   ],
   default: {
     value: 0,
-    title: "Counter",
+    title: "",
     history: [],
     // granularity: 1000 * 60 * 60 * 24,
     granularity: 5000,
   },
+  skipTitleComponent: true,
   sizing: { w: 4, h: 2, minW: 2, minH: 2, maxW: 4, maxH: 4 },
   DisplayComponent: ({ config }) => (
     <Center h="100%">
       <Stat title={config.title}>
-        <NumberFormatter value={config.value ?? 0} thousandSeparator />
+        <NumberFormatter
+          value={visualRound(config.value ?? 0)}
+          thousandSeparator
+        />
       </Stat>
     </Center>
   ),

@@ -51,3 +51,6 @@ export const randId = () => Math.random().toString(36).substr(2, 9);
 
 export const randomInteger = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
+
+export const visualRound = (value: number, precision = 2) =>
+  Math.round(value * 10 ** precision) / 10 ** precision;

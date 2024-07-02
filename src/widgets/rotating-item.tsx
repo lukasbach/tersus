@@ -21,7 +21,7 @@ export const rotatingItemWidget: WidgetDefinition<
     "You can use this to keep a list of people and rotate through them for chores, keep a list of recipes you want to try and rotate through, or keep a list of exercises to rotate through for your workout.",
   ],
   default: {
-    title: "Widget Name",
+    title: "",
     itemName: "Person to cleanup",
     items: ["Michael", "Jim", "Dwight", "Pam", "Ryan"],
   },

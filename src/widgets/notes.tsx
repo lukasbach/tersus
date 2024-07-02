@@ -62,7 +62,12 @@ export const notesWidget: WidgetDefinition<
     }
 
     return (
-      <RichTextEditor editor={editor} bd="unset" style={{ height: "100%" }}>
+      <RichTextEditor
+        editor={editor}
+        bd="unset"
+        style={{ height: "100%" }}
+        styles={{ content: { backgroundColor: "transparent" } }}
+      >
         <Stack h="100%">
           {config.showControls && (
             <RichTextEditor.Toolbar sticky>

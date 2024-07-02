@@ -7,6 +7,8 @@ import { DashboardConfig } from "./types.ts";
 import { randId, removeUndefinedValues, useStableHandler } from "./utils.ts";
 import { widgets } from "./widgets";
 
+const breakpoints = ["lg", "md", "sm", "xs", "xxs"];
+
 export const useManagedDashboardData = (id: string) => {
   const [loadedData] = useDashboardData(id);
   const [currentData, setCurrentData] = useState<DashboardConfig | undefined>();
@@ -74,7 +76,10 @@ export const useManagedDashboardData = (id: string) => {
     const widget = widgets[widgetType];
     if (!currentData) return;
     const id = randId();
-    for (const layoutKey of Object.keys(currentData.layouts)) {
+    for (const layoutKey of breakpoints) {
+      if (!currentData.layouts[layoutKey]) {
+        currentData.layouts[layoutKey] = [];
+      }
       currentData.layouts[layoutKey].push({
         x: 0,
         y: Infinity,
@@ -86,6 +91,7 @@ export const useManagedDashboardData = (id: string) => {
         i: id,
       });
     }
+    console.log("!!", currentData);
     setCurrentData({
       ...currentData,
       widgets: {
