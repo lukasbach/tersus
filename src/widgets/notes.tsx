@@ -6,7 +6,7 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
-import { Box, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import {
   IconNote,
   IconPencil,
@@ -15,7 +15,6 @@ import {
   IconSquareRoundedCheck,
 } from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 export const notesWidget: WidgetDefinition<
   { content: string; showControls: boolean; canEdit: boolean },
@@ -36,7 +35,7 @@ export const notesWidget: WidgetDefinition<
     canEdit: true,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  DisplayComponent: ({ config, onChange, icon }) => {
+  DisplayComponent: ({ config, onChange }) => {
     const editor = useEditor({
       extensions: [
         StarterKit,
@@ -55,23 +54,18 @@ export const notesWidget: WidgetDefinition<
 
     if (!config.canEdit) {
       return (
-        <>
-          {" "}
-          <OptionalWidgetHeader title={config.title} icon={icon} />
-          <div
-            style={{ overflow: "auto", height: "100%" }}
-            dangerouslySetInnerHTML={{ __html: config.content }}
-          />
-        </>
+        <div
+          style={{ overflow: "auto", height: "100%" }}
+          dangerouslySetInnerHTML={{ __html: config.content }}
+        />
       );
     }
 
     return (
       <RichTextEditor editor={editor} bd="unset" style={{ height: "100%" }}>
         <Stack h="100%">
-          <OptionalWidgetHeader title={config.title} icon={icon} />
           {config.showControls && (
-            <RichTextEditor.Toolbar>
+            <RichTextEditor.Toolbar sticky>
               <RichTextEditor.ControlsGroup>
                 <RichTextEditor.Bold />
                 <RichTextEditor.Italic />
@@ -117,9 +111,7 @@ export const notesWidget: WidgetDefinition<
             </RichTextEditor.Toolbar>
           )}
 
-          <Box style={{ flexGrow: "1", overflow: "auto", maxHeight: "100%" }}>
-            <RichTextEditor.Content />
-          </Box>
+          <RichTextEditor.Content />
         </Stack>
       </RichTextEditor>
     );

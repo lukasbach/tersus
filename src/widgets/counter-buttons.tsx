@@ -12,7 +12,6 @@ import { PayloadOfWidgetDefinition, WidgetDefinition } from "../types.ts";
 import { applyCounterChange, counterWidget } from "./counter.tsx";
 import { FieldList } from "../components/atoms/field-list.tsx";
 import { randId } from "../utils.ts";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 type BtnConfig = {
   text: string;
@@ -43,30 +42,27 @@ export const counterButtonsWidget: WidgetDefinition<
     columns: 2,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  DisplayComponent: ({ config, referencing, icon }) => (
-    <>
-      <OptionalWidgetHeader title={config.title} icon={icon} />
-      <Grid>
-        {config.buttons.map((button) => (
-          <Grid.Col span={12 / config.columns} key={button.key}>
-            <Button
-              fullWidth
-              variant="light"
-              onClick={() => {
-                if (!referencing) return;
-                applyCounterChange(
-                  referencing.config,
-                  referencing.onChange,
-                  button.value,
-                );
-              }}
-            >
-              {button.text}
-            </Button>
-          </Grid.Col>
-        ))}
-      </Grid>
-    </>
+  DisplayComponent: ({ config, referencing }) => (
+    <Grid>
+      {config.buttons.map((button) => (
+        <Grid.Col span={12 / config.columns} key={button.key}>
+          <Button
+            fullWidth
+            variant="light"
+            onClick={() => {
+              if (!referencing) return;
+              applyCounterChange(
+                referencing.config,
+                referencing.onChange,
+                button.value,
+              );
+            }}
+          >
+            {button.text}
+          </Button>
+        </Grid.Col>
+      ))}
+    </Grid>
   ),
   ConfigComponent: ({ config, onChange }) => (
     <>

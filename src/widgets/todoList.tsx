@@ -20,7 +20,6 @@ import { DateTimePicker } from "@mantine/dates";
 import ReactTimeAgo from "react-time-ago";
 import { WidgetDefinition } from "../types.ts";
 import { randId } from "../utils.ts";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 type TodoItem = {
   text: string;
@@ -57,7 +56,7 @@ export const todoListWidget: WidgetDefinition<
     },
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  DisplayComponent: ({ icon, config, onChange }) => {
+  DisplayComponent: ({ config, onChange }) => {
     const changeItem = useCallback(
       (id: string, update: Partial<TodoItem>) => {
         onChange({
@@ -74,7 +73,6 @@ export const todoListWidget: WidgetDefinition<
     );
     return (
       <Stack h="100%">
-        <OptionalWidgetHeader title={config.title} icon={icon} />
         <ScrollArea style={{ flexGrow: "1" }}>
           {config.items
             .filter((item) => !config.hideCompleted || !item.doneDate)

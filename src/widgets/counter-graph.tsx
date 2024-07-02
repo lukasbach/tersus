@@ -4,7 +4,6 @@ import { IconChartLine } from "@tabler/icons-react";
 import { PayloadOfWidgetDefinition, WidgetDefinition } from "../types.ts";
 import { HistoryItem, counterWidget } from "./counter.tsx";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 type Payload = { goingBack: number };
 
@@ -68,7 +67,7 @@ export const counterGraphWidget: WidgetDefinition<
     goingBack: 10000,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  DisplayComponent: ({ config, referencing, layout, icon }) => {
+  DisplayComponent: ({ config, referencing, layout }) => {
     const data = useMemo(
       () =>
         referencing &&
@@ -82,16 +81,13 @@ export const counterGraphWidget: WidgetDefinition<
     );
     return (
       referencing && (
-        <>
-          <OptionalWidgetHeader title={config.title} icon={icon} />
-          <AreaChart
-            h={config.title ? "90%" : "100%"}
-            data={data!}
-            dataKey="date"
-            series={[{ name: referencing.config.title, color: "indigo.6" }]}
-            curveType="linear"
-          />
-        </>
+        <AreaChart
+          h={config.title ? "90%" : "100%"}
+          data={data!}
+          dataKey="date"
+          series={[{ name: referencing.config.title, color: "indigo.6" }]}
+          curveType="linear"
+        />
       )
     );
   },

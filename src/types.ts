@@ -38,6 +38,7 @@ export type WidgetDefinition<T, R> = {
   IconComponent: ComponentType<{}>;
   iconActions?: WidgetAction<T, R>[];
   menuActions?: WidgetAction<T, R>[];
+  skipTitleComponent?: boolean;
 };
 
 export type PayloadOfWidgetDefinition<T> =

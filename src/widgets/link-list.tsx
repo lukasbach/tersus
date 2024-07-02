@@ -4,7 +4,6 @@ import { WidgetDefinition } from "../types.ts";
 import { FieldList } from "../components/atoms/field-list.tsx";
 import { randId } from "../utils.ts";
 import { WidgetConfigureWarning } from "../components/atoms/widget-configure-warning.tsx";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 type Anchor = {
   key: string;
@@ -30,29 +29,26 @@ export const linkListWidget: WidgetDefinition<
     openInNewTab: true,
   },
   sizing: { w: 4, h: 2 },
-  DisplayComponent: ({ config, icon, onOpenEditModal }) =>
+  DisplayComponent: ({ config, onOpenEditModal }) =>
     config.links.length === 0 ? (
       <WidgetConfigureWarning onOpenEditModal={onOpenEditModal}>
         No links configured for this widget.
       </WidgetConfigureWarning>
     ) : (
-      <>
-        <OptionalWidgetHeader title={config.title} icon={icon} />
-        <Stack>
-          {config.links.map((link) => (
-            <Button
-              component="a"
-              key={link.key}
-              href={link.url}
-              target={config.openInNewTab ? "_blank" : "_self"}
-              rel="noopener noreferrer"
-              variant="light"
-            >
-              {link.title}
-            </Button>
-          ))}
-        </Stack>
-      </>
+      <Stack>
+        {config.links.map((link) => (
+          <Button
+            component="a"
+            key={link.key}
+            href={link.url}
+            target={config.openInNewTab ? "_blank" : "_self"}
+            rel="noopener noreferrer"
+            variant="light"
+          >
+            {link.title}
+          </Button>
+        ))}
+      </Stack>
     ),
   ConfigComponent: ({ config, onChange }) => (
     <>

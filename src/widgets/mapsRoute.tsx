@@ -1,7 +1,6 @@
 import { Stack, TextInput } from "@mantine/core";
 import { IconMapRoute } from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 export const mapsRouteWidget: WidgetDefinition<
   { from: string; to: string },
@@ -20,9 +19,8 @@ export const mapsRouteWidget: WidgetDefinition<
     to: "Stuttgart, Germany",
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  DisplayComponent: ({ config, icon }) => (
+  DisplayComponent: ({ config }) => (
     <Stack align="stretch" h="100%" gap="0">
-      <OptionalWidgetHeader title={config.title} icon={icon} />
       {/* from https://www.embed-map.com/ */}
       <iframe
         title={config.title}

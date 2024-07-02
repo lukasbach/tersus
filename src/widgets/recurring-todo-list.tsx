@@ -24,7 +24,6 @@ import { randId } from "../utils.ts";
 import { WidgetConfigureWarning } from "../components/atoms/widget-configure-warning.tsx";
 import { FloatingBarContainer } from "../components/atoms/floating-bar-container.tsx";
 import { FloatingBar } from "../components/atoms/floating-bar.tsx";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 type Todo = {
   title: string;
@@ -54,7 +53,7 @@ export const recurringTodoListWidget: WidgetDefinition<
     showNextRange: 1000 * 60 * 60 * 24 * 2,
   },
   sizing: { w: 3, h: 4, minW: 2, minH: 2 },
-  DisplayComponent: ({ icon, config, onOpenEditModal, onChange }) => {
+  DisplayComponent: ({ config, onOpenEditModal, onChange }) => {
     const relevantTasks = config.todos
       .filter(
         (todo) =>
@@ -76,20 +75,16 @@ export const recurringTodoListWidget: WidgetDefinition<
 
     if (relevantTasks.length === 0) {
       return (
-        <>
-          <OptionalWidgetHeader title={config.title} icon={icon} />
-          <Center h="100%">
-            <Stack>
-              <Text>No upcoming tasks.</Text>
-            </Stack>
-          </Center>
-        </>
+        <Center h="100%">
+          <Stack>
+            <Text>No upcoming tasks.</Text>
+          </Stack>
+        </Center>
       );
     }
 
     return (
       <Stack align="stretch" w="100%">
-        <OptionalWidgetHeader title={config.title} icon={icon} />
         {relevantTasks.map((todo) => {
           const hasPassed =
             !todo.lastDone || todo.lastDone + todo.frequency < Date.now();

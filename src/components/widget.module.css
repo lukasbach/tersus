@@ -1,0 +1,8 @@
+.widgetScrollViewPort {
+    min-height: 100%;
+}
+
+.widgetScrollViewPort > div {
+    min-height: 100%;
+    display: initial !important;
+}

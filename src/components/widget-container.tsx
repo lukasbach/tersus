@@ -3,8 +3,10 @@ import {
   ActionIcon,
   Button,
   Card,
+  Flex,
   Menu,
   Modal,
+  ScrollArea,
   Select,
   Stack,
   TextInput,
@@ -23,6 +25,8 @@ import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
 import { FloatingBarContainer } from "./atoms/floating-bar-container.tsx";
 import { FloatingBar } from "./atoms/floating-bar.tsx";
 import { WidgetConfigureWarning } from "./atoms/widget-configure-warning.tsx";
+import { OptionalWidgetHeader } from "./atoms/optional-widget-header.tsx";
+import styles from "./widget.module.css";
 
 const WidgetContainerInner: FC<{
   widgetId: string;
@@ -182,9 +186,22 @@ const WidgetContainerInner: FC<{
           h="100%"
           pos="relative"
         >
-          <div style={{ height: "100%" }}>
+          <Flex h="100%" direction="column">
             {renderProps.referenceResolved ? (
-              <widgetDef.DisplayComponent {...renderProps} />
+              <>
+                {!widgetDef.skipTitleComponent && (
+                  <OptionalWidgetHeader
+                    title={renderProps.config.title}
+                    icon={renderProps.icon}
+                  />
+                )}
+                <ScrollArea
+                  style={{ flexGrow: "1" }}
+                  classNames={{ viewport: styles.widgetScrollViewPort }}
+                >
+                  <widgetDef.DisplayComponent {...renderProps} />
+                </ScrollArea>
+              </>
             ) : (
               <WidgetConfigureWarning
                 onOpenEditModal={renderProps.onOpenEditModal}
@@ -192,7 +209,7 @@ const WidgetContainerInner: FC<{
                 This widget needs to reference another widget
               </WidgetConfigureWarning>
             )}
-          </div>
+          </Flex>
         </Card>
       </FloatingBarContainer>
     </>

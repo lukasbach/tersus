@@ -1,7 +1,6 @@
 import { Stack, TextInput } from "@mantine/core";
 import { IconExternalLink, IconWorldWww } from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
-import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 export const iframeWidget: WidgetDefinition<{ url: string }, undefined> = {
   name: "Iframe Embed",
@@ -16,9 +15,8 @@ export const iframeWidget: WidgetDefinition<{ url: string }, undefined> = {
     url: "https://lukasbach.com",
   },
   sizing: { w: 4, h: 3 },
-  DisplayComponent: ({ config, icon }) => (
+  DisplayComponent: ({ config }) => (
     <Stack align="stretch" h="100%" gap="0">
-      <OptionalWidgetHeader title={config.title} icon={icon} />
       <iframe
         title={config.title}
         style={{
