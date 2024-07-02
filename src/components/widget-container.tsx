@@ -1,12 +1,12 @@
 import { FC, memo } from "react";
 import {
   ActionIcon,
+  Box,
   Button,
   Card,
   Flex,
   Menu,
   Modal,
-  ScrollArea,
   Select,
   Stack,
   TextInput,
@@ -26,7 +26,6 @@ import { FloatingBarContainer } from "./atoms/floating-bar-container.tsx";
 import { FloatingBar } from "./atoms/floating-bar.tsx";
 import { WidgetConfigureWarning } from "./atoms/widget-configure-warning.tsx";
 import { OptionalWidgetHeader } from "./atoms/optional-widget-header.tsx";
-import styles from "./widget.module.css";
 
 const WidgetContainerInner: FC<{
   widgetId: string;
@@ -195,12 +194,14 @@ const WidgetContainerInner: FC<{
                     icon={renderProps.icon}
                   />
                 )}
-                <ScrollArea
-                  style={{ flexGrow: "1" }}
-                  classNames={{ viewport: styles.widgetScrollViewPort }}
+                <Box
+                  style={{
+                    minHeight: "100%",
+                    overflow: "auto",
+                  }}
                 >
                   <widgetDef.DisplayComponent {...renderProps} />
-                </ScrollArea>
+                </Box>
               </>
             ) : (
               <WidgetConfigureWarning

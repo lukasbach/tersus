@@ -14,6 +14,7 @@ import {
   IconBell,
   IconBellRinging,
   IconClockHour8,
+  IconSquareRounded,
   IconSquareRoundedCheck,
 } from "@tabler/icons-react";
 import ReactTimeAgo from "react-time-ago";
@@ -36,6 +37,7 @@ export const recurringTodoListWidget: WidgetDefinition<
   {
     todos: Todo[];
     showNextRange: number;
+    showAll: boolean;
   },
   undefined
 > = {
@@ -51,12 +53,14 @@ export const recurringTodoListWidget: WidgetDefinition<
     title: "My recurring tasks",
     todos: [],
     showNextRange: 1000 * 60 * 60 * 24 * 2,
+    showAll: false,
   },
   sizing: { w: 3, h: 4, minW: 2, minH: 2 },
   DisplayComponent: ({ config, onOpenEditModal, onChange }) => {
     const relevantTasks = config.todos
       .filter(
         (todo) =>
+          config.showAll ||
           todo.lastDone === null ||
           todo.lastDone + todo.frequency < Date.now() + config.showNextRange,
       )
@@ -113,7 +117,7 @@ export const recurringTodoListWidget: WidgetDefinition<
                 }
               >
                 <Paper p="xs" px="lg" shadow="xs" radius="lg" withBorder>
-                  <Group>
+                  <Group justify="flex-end">
                     {hasPassed ? <IconBellRinging /> : <IconBell />}
                     <Box style={{ flexGrow: "1" }}>
                       <Text fw="600">{todo.title}</Text>
@@ -181,4 +185,14 @@ export const recurringTodoListWidget: WidgetDefinition<
       />
     </>
   ),
+  menuActions: [
+    {
+      text: "Show all items",
+      action: ({ config, onChange }) => {
+        onChange({ showAll: !config.showAll });
+      },
+      icon: ({ config }) =>
+        config.showAll ? <IconSquareRoundedCheck /> : <IconSquareRounded />,
+    },
+  ],
 };

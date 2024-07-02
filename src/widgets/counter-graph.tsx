@@ -64,7 +64,7 @@ export const counterGraphWidget: WidgetDefinition<
   ],
   default: {
     title: "",
-    goingBack: 10000,
+    goingBack: 1000 * 60 * 60 * 24 * 7,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
   DisplayComponent: ({ config, referencing, layout }) => {

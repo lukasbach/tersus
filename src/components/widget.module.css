@@ -1,8 +1,8 @@
+/* TODO not used anymore, removed scrollarea from widget containers */
 .widgetScrollViewPort {
     min-height: 100%;
 }
 
 .widgetScrollViewPort > div {
     min-height: 100%;
-    display: initial !important;
 }

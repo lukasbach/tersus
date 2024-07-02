@@ -12,14 +12,18 @@ import {
 } from "@mantine/core";
 import {
   IconCheck,
+  IconPencil,
   IconSquareRounded,
   IconSquareRoundedCheck,
+  IconTrash,
 } from "@tabler/icons-react";
 import { useCallback, useMemo } from "react";
 import { DateTimePicker } from "@mantine/dates";
 import ReactTimeAgo from "react-time-ago";
 import { WidgetDefinition } from "../types.ts";
 import { randId } from "../utils.ts";
+import { FloatingBarContainer } from "../components/atoms/floating-bar-container.tsx";
+import { FloatingBar } from "../components/atoms/floating-bar.tsx";
 
 type TodoItem = {
   text: string;
@@ -67,6 +71,14 @@ export const todoListWidget: WidgetDefinition<
       },
       [config.items, onChange],
     );
+    const deleteItem = useCallback(
+      (id: string) => {
+        onChange({
+          items: config.items.filter((item) => item.id !== id),
+        });
+      },
+      [config.items, onChange],
+    );
     const doneItems = useMemo(
       () => config.items.filter((item) => !!item.doneDate),
       [config.items],
@@ -77,31 +89,59 @@ export const todoListWidget: WidgetDefinition<
           {config.items
             .filter((item) => !config.hideCompleted || !item.doneDate)
             .map((item) => (
-              <Paper key={item.id} p="xs" mb="xs" shadow="xs" withBorder>
-                <Group>
-                  <Checkbox
-                    style={{ flexGrow: "1" }}
-                    label={item.text}
-                    checked={!!item.doneDate}
-                    onChange={(e) => {
-                      changeItem(item.id, {
-                        doneDate: e.currentTarget.checked ? Date.now() : 0,
-                      });
-                    }}
-                  />
-                  {item.dueDate && (
-                    <Badge
-                      color={
-                        item.dueDate < Date.now() && !item.doneDate
-                          ? "red"
-                          : undefined
+              <FloatingBarContainer>
+                <FloatingBar>
+                  <ActionIcon
+                    aria-label="Rename item"
+                    variant="subtle"
+                    color="gray"
+                    onClick={async () => {
+                      const newName = prompt("New name", item.text);
+                      if (newName) {
+                        changeItem(item.id, { text: newName });
                       }
-                    >
-                      <ReactTimeAgo date={new Date(item.dueDate)} />
-                    </Badge>
-                  )}
-                </Group>
-              </Paper>
+                    }}
+                  >
+                    <IconPencil />
+                  </ActionIcon>
+                  <ActionIcon
+                    aria-label="Remove item"
+                    variant="subtle"
+                    color="red"
+                    onClick={async () => {
+                      deleteItem(item.id);
+                    }}
+                  >
+                    <IconTrash />
+                  </ActionIcon>
+                </FloatingBar>
+
+                <Paper key={item.id} p="xs" mb="xs" shadow="xs" withBorder>
+                  <Group>
+                    <Checkbox
+                      style={{ flexGrow: "1" }}
+                      label={item.text}
+                      checked={!!item.doneDate}
+                      onChange={(e) => {
+                        changeItem(item.id, {
+                          doneDate: e.currentTarget.checked ? Date.now() : 0,
+                        });
+                      }}
+                    />
+                    {item.dueDate && (
+                      <Badge
+                        color={
+                          item.dueDate < Date.now() && !item.doneDate
+                            ? "red"
+                            : undefined
+                        }
+                      >
+                        <ReactTimeAgo date={new Date(item.dueDate)} />
+                      </Badge>
+                    )}
+                  </Group>
+                </Paper>
+              </FloatingBarContainer>
             ))}
         </ScrollArea>
         <form

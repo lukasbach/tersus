@@ -43,7 +43,7 @@ export const counterButtonsWidget: WidgetDefinition<
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
   DisplayComponent: ({ config, referencing }) => (
-    <Grid>
+    <Grid mx="8px">
       {config.buttons.map((button) => (
         <Grid.Col span={12 / config.columns} key={button.key}>
           <Button
