@@ -50,7 +50,7 @@ export const counterWidget: WidgetDefinition<Payload, undefined> = {
   DisplayComponent: ({ config }) => (
     <Center h="100%">
       <Stat title={config.title}>
-        <NumberFormatter value={config.value} thousandSeparator />
+        <NumberFormatter value={config.value ?? 0} thousandSeparator />
       </Stat>
     </Center>
   ),

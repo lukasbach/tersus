@@ -5759,6 +5759,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-countdown@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "react-countdown@npm:2.3.5"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ">= 15"
+    react-dom: ">= 15"
+  checksum: 10c0/894383a2f6d99717b32bc3d52ab6c8c7f01c41105b05bda9aa829f13fc9a3285caec4bf6769ce821f7e6c78a19ed58bb14fb285dd3b5c62487cbcd759bd304cb
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -6625,6 +6637,7 @@ __metadata:
     postcss-preset-mantine: "npm:^1.15.0"
     postcss-simple-vars: "npm:^7.0.1"
     react: "npm:^18.3.1"
+    react-countdown: "npm:^2.3.5"
     react-dom: "npm:^18.3.1"
     react-firebase-hooks: "npm:^5.1.1"
     react-grid-layout: "npm:^1.4.4"

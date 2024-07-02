@@ -3,12 +3,10 @@ import {
   ActionIcon,
   Button,
   Card,
-  Center,
   Menu,
   Modal,
   Select,
   Stack,
-  Text,
   TextInput,
 } from "@mantine/core";
 import {
@@ -24,6 +22,7 @@ import { useWidgetRenderProps } from "./use-widget-render-props.tsx";
 import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
 import { FloatingBarContainer } from "./atoms/floating-bar-container.tsx";
 import { FloatingBar } from "./atoms/floating-bar.tsx";
+import { WidgetConfigureWarning } from "./atoms/widget-configure-warning.tsx";
 
 const WidgetContainerInner: FC<{
   widgetId: string;
@@ -50,41 +49,43 @@ const WidgetContainerInner: FC<{
         title="Edit Widget"
         size="lg"
       >
-        <TextInput
-          label="Widget title"
-          placeholder="Widget title"
-          defaultValue={widget.config.title}
-          onChange={(event) =>
-            dashboard.updateWidgetConfig(widgetId, {
-              title: event.currentTarget.value,
-            })
-          }
-        />
-        {widgetDef.referencing && (
-          <Select
-            withAsterisk
-            error={widgetDef.referencing && !widget.config.referencingId}
-            label="Referencing widget"
-            description={`This widget must reference a ${widgetDef.referencing.name} widget, on which it acts.`}
-            placeholder="Pick a widget"
-            data={Object.entries(dashboard.data?.widgets ?? {})
-              .filter(([, w]) => widgets[w.type] === widgetDef.referencing)
-              .map(([id, widget]) => ({
-                value: id,
-                label: widget.config.title,
-              }))}
-            value={widget.config.referencingId}
-            onChange={(value) =>
+        <Stack>
+          <TextInput
+            label="Widget title"
+            placeholder="Widget title"
+            defaultValue={widget.config.title}
+            onChange={(event) =>
               dashboard.updateWidgetConfig(widgetId, {
-                referencingId: value as string,
+                title: event.currentTarget.value,
               })
             }
-            clearable
           />
-        )}
-        {widgetDef.ConfigComponent && (
-          <widgetDef.ConfigComponent {...(renderProps as any)} />
-        )}
+          {widgetDef.referencing && (
+            <Select
+              withAsterisk
+              error={widgetDef.referencing && !widget.config.referencingId}
+              label="Referencing widget"
+              description={`This widget must reference a ${widgetDef.referencing.name} widget, on which it acts.`}
+              placeholder="Pick a widget"
+              data={Object.entries(dashboard.data?.widgets ?? {})
+                .filter(([, w]) => widgets[w.type] === widgetDef.referencing)
+                .map(([id, widget]) => ({
+                  value: id,
+                  label: widget.config.title,
+                }))}
+              value={widget.config.referencingId}
+              onChange={(value) =>
+                dashboard.updateWidgetConfig(widgetId, {
+                  referencingId: value as string,
+                })
+              }
+              clearable
+            />
+          )}
+          {widgetDef.ConfigComponent && (
+            <widgetDef.ConfigComponent {...(renderProps as any)} />
+          )}
+        </Stack>
       </Modal>
       <FloatingBarContainer>
         <Card
@@ -185,14 +186,11 @@ const WidgetContainerInner: FC<{
             {renderProps.referenceResolved ? (
               <widgetDef.DisplayComponent {...renderProps} />
             ) : (
-              <Center h="100%">
-                <Stack>
-                  <Text>This widget needs to reference another widget</Text>
-                  <Button onClick={renderProps.onOpenEditModal}>
-                    Configure widget
-                  </Button>
-                </Stack>
-              </Center>
+              <WidgetConfigureWarning
+                onOpenEditModal={renderProps.onOpenEditModal}
+              >
+                This widget needs to reference another widget
+              </WidgetConfigureWarning>
             )}
           </div>
         </Card>

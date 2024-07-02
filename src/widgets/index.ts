@@ -8,6 +8,7 @@ import { notesWidget } from "./notes.tsx";
 import { mapsRouteWidget } from "./mapsRoute.tsx";
 import { mapsLocationWidget } from "./mapsLocation.tsx";
 import { rotatingItemWidget } from "./rotating-item.tsx";
+import { dateTickerWidget } from "./date-ticker.tsx";
 
 export const widgets = {
   counterWidget,
@@ -19,4 +20,5 @@ export const widgets = {
   mapsRouteWidget,
   mapsLocationWidget,
   rotatingItemWidget,
+  dateTickerWidget,
 } as Record<string, WidgetDefinition<any, any>>;
