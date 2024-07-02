@@ -98,7 +98,6 @@ export const ConfigureDashboardMenu: FC<{
               const { id } = await createDashboard({
                 ...JSON.parse(JSON.stringify(dashboard.data)),
                 title: `${newDashboard.title} (fork)`,
-                lastEdit: Date.now(),
               });
               window.open(`#/board/${id}`, "_blank");
             },

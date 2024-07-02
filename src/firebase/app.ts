@@ -39,7 +39,12 @@ export const getDashboardDoc = (id: string) =>
 export const useDashboardData = (id: string | null) =>
   useDocument<DashboardConfig>(id ? getDashboardDoc(id) : null);
 
-export const createDashboard = (dashboard: DashboardConfig) =>
+export const createDashboard = (
+  dashboard: Omit<
+    DashboardConfig,
+    "lastEdit" | "createdAt" | "editedAfterWeek"
+  >,
+) =>
   addDoc(dashboardsCollection, {
     ...dashboard,
     lastEdit: Date.now(),

@@ -14,11 +14,9 @@ export const useDashboardList = () => {
   });
 
   const addRecent = useStableHandler((dashboard: DashboardLink) => {
-    setRecents((current) => {
-      const newRecents = current.filter((d) => d.id !== dashboard.id);
-      newRecents.unshift(dashboard);
-      return newRecents.slice(0, 30);
-    });
+    const newRecents = recents.filter((d) => d.id !== dashboard.id);
+    newRecents.unshift(dashboard);
+    setRecents(newRecents.slice(0, 30));
   });
 
   const addStarred = useStableHandler((dashboard: DashboardLink) => {

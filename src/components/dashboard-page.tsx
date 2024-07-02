@@ -9,8 +9,9 @@ import {
   Group,
   Menu,
   Text,
+  em,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconAdjustments, IconSquareRoundedPlus } from "@tabler/icons-react";
 import { boardViewRoute } from "../router.tsx";
 import { widgets } from "../widgets";
@@ -29,6 +30,7 @@ export const DashboardPage: FC = () => {
   const dashboard = useManagedDashboardData(id);
   const [widgetDrawerOpen, widgetDrawer] = useDisclosure(false);
   const { addRecent } = useDashboardList();
+  const isMobile = useMediaQuery(`(max-width: ${em(1100)})`);
 
   useEffect(() => {
     if (!dashboard.data) return;
@@ -49,15 +51,18 @@ export const DashboardPage: FC = () => {
             <Button
               radius="md"
               onClick={widgetDrawer.open}
-              leftSection={<IconSquareRoundedPlus />}
+              leftSection={!isMobile && <IconSquareRoundedPlus />}
             >
-              Add Widget
+              {!isMobile ? "Add Widget" : <IconSquareRoundedPlus />}
             </Button>
 
             <Menu shadow="md" width={200}>
               <Menu.Target>
-                <Button radius="md" leftSection={<IconAdjustments />}>
-                  Configure
+                <Button
+                  radius="md"
+                  leftSection={!isMobile && <IconAdjustments />}
+                >
+                  {!isMobile ? "Configure" : <IconAdjustments />}
                 </Button>
               </Menu.Target>
               <ConfigureDashboardMenu dashboard={dashboard} dashboardId={id} />

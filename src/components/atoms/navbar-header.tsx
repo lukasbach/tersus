@@ -6,6 +6,7 @@ import {
   Menu,
   Text,
   UnstyledButton,
+  em,
   useMantineColorScheme,
 } from "@mantine/core";
 import {
@@ -15,6 +16,7 @@ import {
   IconSun,
   IconTablePlus,
 } from "@tabler/icons-react";
+import { useMediaQuery } from "@mantine/hooks";
 import { createDashboard } from "../../firebase/app.ts";
 import { RecentDashboardsMenu } from "./recent-dashboards-menu.tsx";
 
@@ -22,6 +24,7 @@ export const NavbarHeader: FC<
   PropsWithChildren<{ currentDashboardId: string }>
 > = ({ children, currentDashboardId }) => {
   const { toggleColorScheme, colorScheme } = useMantineColorScheme();
+  const isMobile = useMediaQuery(`(max-width: ${em(1100)})`);
   return (
     <Group gap="xs">
       <UnstyledButton>
@@ -34,7 +37,9 @@ export const NavbarHeader: FC<
       </UnstyledButton>
       <Menu shadow="md">
         <Menu.Target>
-          <Button variant="default">Recent Dashboards</Button>
+          <Button variant="default">
+            {isMobile ? "Recents" : "Recent Dashboards"}
+          </Button>
         </Menu.Target>
         <RecentDashboardsMenu currentDashboardId={currentDashboardId} />
       </Menu>
@@ -51,19 +56,18 @@ export const NavbarHeader: FC<
       </ActionIcon>
       <Button
         variant="subtle"
-        leftSection={<IconTablePlus />}
+        leftSection={!isMobile && <IconTablePlus />}
         onClick={async () => {
           // TODO Default dashboard
           const { id } = await createDashboard({
             widgets: {},
             layouts: {},
             title: `My new dashboard`,
-            lastEdit: Date.now(),
           });
           window.open(`#/board/${id}`, "_blank");
         }}
       >
-        Create Dashboard
+        {!isMobile ? "Create Dashboard" : <IconTablePlus />}
       </Button>
       {children}
     </Group>

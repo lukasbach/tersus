@@ -10,20 +10,21 @@ import { widgets } from "./widgets";
 export const useManagedDashboardData = (id: string) => {
   const [loadedData] = useDashboardData(id);
   const [currentData, setCurrentData] = useState<DashboardConfig | undefined>();
+  const [currentId, setCurrentId] = useState(id);
 
   useEffect(() => {
-    if (loadedData && !currentData) {
-      console.log("Loaded data");
-      setCurrentData(loadedData.data());
-    }
-  }, [currentData, loadedData]);
+    if (!loadedData) return;
+    console.log("Loaded data for document", id);
+    setCurrentData(loadedData.data());
+    setCurrentId(id);
+  }, [id, loadedData]);
 
   const persist = useStableHandler(async () => {
     if (!currentData) return;
-    console.log("Saving dashboard:", id, currentData);
+    console.log("Saving dashboard:", currentId, currentData);
     const lastEdit = Date.now();
     await updateDashboard(
-      id,
+      currentId,
       removeUndefinedValues({
         ...currentData,
         lastEdit,
