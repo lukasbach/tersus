@@ -19,7 +19,7 @@
     z-index: var(--mantine-z-index-overlay);
 }
 
-.floatingBarContainer:hover .floatingBar, .floatingBarContainer:focus-within .floatingBar {
+.floatingBarContainer:hover > .floatingBar, .floatingBarContainer:focus-within > .floatingBar {
     opacity: 1;
     pointer-events: all;
 }

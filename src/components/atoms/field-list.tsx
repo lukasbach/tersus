@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import { ReactNode } from "react";
 import { ActionIcon, Button, Group, Input, Paper, Stack } from "@mantine/core";
 import { IconArrowDown, IconArrowUp, IconTrash } from "@tabler/icons-react";
@@ -8,7 +9,7 @@ export const FieldList = <T,>(props: {
   getKey: (value: T) => string;
   value: T[];
   onChange: (value: T[]) => void;
-  renderField: (value: T, onChange: (value: T) => void) => ReactNode;
+  renderField: (value: T, onChange: (value: Partial<T>) => void) => ReactNode;
   renderHeader?: (onAdd: (value: T) => void) => ReactNode;
   label?: string;
   description?: string;
@@ -88,7 +89,7 @@ export const FieldList = <T,>(props: {
               </FloatingBar>
               {props.renderField(value, (v) => {
                 const newValue = [...props.value];
-                newValue[newValue.indexOf(value)] = v;
+                newValue[newValue.indexOf(value)] = { ...value, ...v };
                 props.onChange(newValue);
               })}
             </FloatingBarContainer>

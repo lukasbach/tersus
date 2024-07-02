@@ -32,6 +32,13 @@ export const recurringTodoWidget: WidgetDefinition<
         alert={
           !!config.lastDone && config.lastDone < Date.now() - config.frequency
         }
+        subtitle={
+          config.lastDone && (
+            <>
+              Next <ReactTimeAgo date={config.lastDone + config.frequency} />
+            </>
+          )
+        }
       >
         {config.lastDone ? <ReactTimeAgo date={config.lastDone} /> : "Never"}
       </Stat>

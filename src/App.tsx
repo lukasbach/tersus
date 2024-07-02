@@ -37,6 +37,21 @@ const App = () => {
               radius: "md",
             },
           },
+          Select: {
+            styles: {
+              wrapper: {
+                marginTop: "4px",
+              },
+            },
+          },
+          NumberInput: {
+            defaultProps: { size: "sm" },
+            styles: {
+              wrapper: {
+                marginTop: "4px",
+              },
+            },
+          },
           TextInput: {
             defaultProps: { size: "sm" },
             styles: {

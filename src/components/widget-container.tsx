@@ -88,6 +88,92 @@ const WidgetContainerInner: FC<{
         </Stack>
       </Modal>
       <FloatingBarContainer>
+        <FloatingBar>
+          <ActionIcon
+            variant="subtle"
+            color="gray"
+            className="draghandle"
+            style={{ cursor: "grab" }}
+          >
+            <IconGripVertical />
+          </ActionIcon>
+
+          {widgetDef.iconActions?.map((action) => {
+            if (action.skip?.(renderProps)) return null;
+            if (typeof action.icon === "string") {
+              return (
+                <Button
+                  key={action.text}
+                  variant="subtle"
+                  color="gray"
+                  onClick={() => action.action(renderProps)}
+                  size="compact-sm"
+                >
+                  {action.icon}
+                </Button>
+              );
+            }
+
+            return (
+              <ActionIcon
+                key={action.text}
+                variant="subtle"
+                color="gray"
+                onClick={() => action.action(renderProps)}
+                aria-label={action.text}
+              >
+                {action.icon && <action.icon {...renderProps} />}
+              </ActionIcon>
+            );
+          })}
+
+          <Menu withinPortal position="bottom-end" shadow="sm">
+            <Menu.Target>
+              <ActionIcon variant="subtle" color="gray">
+                <IconDots />
+              </ActionIcon>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              {widgetDef.menuActions?.map((action) => {
+                if (action.skip?.(renderProps)) return null;
+                return (
+                  <Menu.Item
+                    key={action.text}
+                    leftSection={
+                      action.icon && <action.icon {...renderProps} />
+                    }
+                    onClick={() => action.action(renderProps)}
+                  >
+                    {action.text}
+                  </Menu.Item>
+                );
+              })}
+
+              <Menu.Item
+                leftSection={<IconPencil />}
+                onClick={renderProps.onOpenEditModal}
+              >
+                Configure Widget
+              </Menu.Item>
+
+              <Menu.Item
+                leftSection={<IconTrash />}
+                color="red"
+                onClick={() =>
+                  modals.openConfirmModal({
+                    title: "Delete widget",
+                    children: "Are you sure you want to delete this widget?",
+                    labels: { cancel: "Cancel", confirm: "Delete widget" },
+                    onConfirm: () => dashboard.deleteWidget(widgetId),
+                  })
+                }
+              >
+                Delete Widget
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </FloatingBar>
         <Card
           withBorder
           shadow="sm"
@@ -96,92 +182,6 @@ const WidgetContainerInner: FC<{
           h="100%"
           pos="relative"
         >
-          <FloatingBar>
-            <ActionIcon
-              variant="subtle"
-              color="gray"
-              className="draghandle"
-              style={{ cursor: "grab" }}
-            >
-              <IconGripVertical />
-            </ActionIcon>
-
-            {widgetDef.iconActions?.map((action) => {
-              if (action.skip?.(renderProps)) return null;
-              if (typeof action.icon === "string") {
-                return (
-                  <Button
-                    key={action.text}
-                    variant="subtle"
-                    color="gray"
-                    onClick={() => action.action(renderProps)}
-                    size="compact-sm"
-                  >
-                    {action.icon}
-                  </Button>
-                );
-              }
-
-              return (
-                <ActionIcon
-                  key={action.text}
-                  variant="subtle"
-                  color="gray"
-                  onClick={() => action.action(renderProps)}
-                  aria-label={action.text}
-                >
-                  {action.icon && <action.icon {...renderProps} />}
-                </ActionIcon>
-              );
-            })}
-
-            <Menu withinPortal position="bottom-end" shadow="sm">
-              <Menu.Target>
-                <ActionIcon variant="subtle" color="gray">
-                  <IconDots />
-                </ActionIcon>
-              </Menu.Target>
-
-              <Menu.Dropdown>
-                {widgetDef.menuActions?.map((action) => {
-                  if (action.skip?.(renderProps)) return null;
-                  return (
-                    <Menu.Item
-                      key={action.text}
-                      leftSection={
-                        action.icon && <action.icon {...renderProps} />
-                      }
-                      onClick={() => action.action(renderProps)}
-                    >
-                      {action.text}
-                    </Menu.Item>
-                  );
-                })}
-
-                <Menu.Item
-                  leftSection={<IconPencil />}
-                  onClick={renderProps.onOpenEditModal}
-                >
-                  Configure Widget
-                </Menu.Item>
-
-                <Menu.Item
-                  leftSection={<IconTrash />}
-                  color="red"
-                  onClick={() =>
-                    modals.openConfirmModal({
-                      title: "Delete widget",
-                      children: "Are you sure you want to delete this widget?",
-                      labels: { cancel: "Cancel", confirm: "Delete widget" },
-                      onConfirm: () => dashboard.deleteWidget(widgetId),
-                    })
-                  }
-                >
-                  Delete Widget
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-          </FloatingBar>
           <div style={{ height: "100%" }}>
             {renderProps.referenceResolved ? (
               <widgetDef.DisplayComponent {...renderProps} />

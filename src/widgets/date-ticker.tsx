@@ -1,4 +1,4 @@
-import { Icon123 } from "@tabler/icons-react";
+import { IconAlarm } from "@tabler/icons-react";
 import { DateTimePicker } from "@mantine/dates";
 import ReactTimeAgo from "react-time-ago";
 import { Center, Checkbox } from "@mantine/core";
@@ -12,7 +12,7 @@ export const dateTickerWidget: WidgetDefinition<
   undefined
 > = {
   name: "Date Ticker",
-  IconComponent: Icon123,
+  IconComponent: IconAlarm,
   label: "Counts down the remaining time to a date",
   description: [
     "Track the remaining days to a specific date, such as a deadline, a Holiday, weeks to a new baby born, or a wedding date.",

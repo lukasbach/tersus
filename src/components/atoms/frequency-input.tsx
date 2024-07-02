@@ -42,7 +42,7 @@ export const FrequencyInput: FC<
 
   return (
     <Input.Wrapper {...wrapperProps}>
-      <Group>
+      <Group wrap="nowrap">
         <NumberInput
           style={{ flexGrow: 1 }}
           value={Math.round(number * 100) / 100}
