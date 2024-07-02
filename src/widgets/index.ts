@@ -10,6 +10,8 @@ import { mapsLocationWidget } from "./mapsLocation.tsx";
 import { rotatingItemWidget } from "./rotating-item.tsx";
 import { dateTickerWidget } from "./date-ticker.tsx";
 import { recurringTodoListWidget } from "./recurring-todo-list.tsx";
+import { iframeWidget } from "./iframe.tsx";
+import { linkListWidget } from "./link-list.tsx";
 
 export const widgets = {
   counterWidget,
@@ -23,4 +25,6 @@ export const widgets = {
   mapsLocationWidget,
   rotatingItemWidget,
   dateTickerWidget,
+  iframeWidget,
+  linkListWidget,
 } as Record<string, WidgetDefinition<any, any>>;
