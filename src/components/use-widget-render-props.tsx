@@ -45,6 +45,7 @@ export const useWidgetRenderProps = (
   }, [
     widget.config,
     dashboard,
+    widgetDef.IconComponent,
     layout,
     onOpenEditModal,
     referenceResolved,
