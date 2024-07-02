@@ -15,6 +15,7 @@ import {
   IconSquareRoundedCheck,
 } from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
+import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 export const notesWidget: WidgetDefinition<
   { content: string; showControls: boolean; canEdit: boolean },
@@ -29,13 +30,13 @@ export const notesWidget: WidgetDefinition<
     "You can toggle the toolbar and the ability to edit the text.",
   ],
   default: {
-    title: "Widget Name",
+    title: "",
     content: "",
     showControls: true,
     canEdit: true,
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  DisplayComponent: ({ config, onChange }) => {
+  DisplayComponent: ({ config, onChange, icon }) => {
     const editor = useEditor({
       extensions: [
         StarterKit,
@@ -54,16 +55,21 @@ export const notesWidget: WidgetDefinition<
 
     if (!config.canEdit) {
       return (
-        <div
-          style={{ overflow: "auto", height: "100%" }}
-          dangerouslySetInnerHTML={{ __html: config.content }}
-        />
+        <>
+          {" "}
+          <OptionalWidgetHeader title={config.title} icon={icon} />
+          <div
+            style={{ overflow: "auto", height: "100%" }}
+            dangerouslySetInnerHTML={{ __html: config.content }}
+          />
+        </>
       );
     }
 
     return (
       <RichTextEditor editor={editor} bd="unset" style={{ height: "100%" }}>
         <Stack h="100%">
+          <OptionalWidgetHeader title={config.title} icon={icon} />
           {config.showControls && (
             <RichTextEditor.Toolbar>
               <RichTextEditor.ControlsGroup>

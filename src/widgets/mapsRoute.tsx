@@ -1,12 +1,13 @@
-import { Center, TextInput } from "@mantine/core";
+import { Stack, TextInput } from "@mantine/core";
 import { IconMapRoute } from "@tabler/icons-react";
 import { WidgetDefinition } from "../types.ts";
+import { OptionalWidgetHeader } from "../components/atoms/optional-widget-header.tsx";
 
 export const mapsRouteWidget: WidgetDefinition<
   { from: string; to: string },
   undefined
 > = {
-  name: "Maps Route",
+  name: "",
   IconComponent: IconMapRoute,
   label: "Displays a map with a predefined route",
   description: [
@@ -19,8 +20,9 @@ export const mapsRouteWidget: WidgetDefinition<
     to: "Stuttgart, Germany",
   },
   sizing: { w: 4, h: 2, minW: 2, minH: 2 },
-  DisplayComponent: ({ config }) => (
-    <Center h="100%">
+  DisplayComponent: ({ config, icon }) => (
+    <Stack align="stretch" h="100%" gap="0">
+      <OptionalWidgetHeader title={config.title} icon={icon} />
       {/* from https://www.embed-map.com/ */}
       <iframe
         title={config.title}
@@ -29,11 +31,12 @@ export const mapsRouteWidget: WidgetDefinition<
           height: "100%",
           border: "0",
           borderRadius: "8px",
+          flexGrow: "1",
         }}
         frameBorder="0"
         src={`https://www.google.com/maps/embed/v1/directions?origin=${encodeURIComponent(config.from)}&destination=${encodeURIComponent(config.to)}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`}
       />
-    </Center>
+    </Stack>
   ),
   ConfigComponent: ({ config, onChange }) => (
     <>
