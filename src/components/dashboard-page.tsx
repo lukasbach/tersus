@@ -24,8 +24,7 @@ import { useDashboardList } from "../use-dashboard-list.ts";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-export const DashboardPage: FC = () => {
-  const { id } = boardViewRoute.useParams();
+export const DashboardPageInner: FC<{ id: string }> = ({ id }) => {
   const [breakpoint, setBreakpoint] = useState("lg");
   const dashboard = useManagedDashboardData(id);
   const [widgetDrawerOpen, widgetDrawer] = useDisclosure(false);
@@ -113,4 +112,9 @@ export const DashboardPage: FC = () => {
       </AppShell.Main>
     </AppShell>
   );
+};
+
+export const DashboardPage = () => {
+  const { id } = boardViewRoute.useParams();
+  return <DashboardPageInner id={id} key={id} />;
 };

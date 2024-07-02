@@ -10,21 +10,19 @@ import { widgets } from "./widgets";
 export const useManagedDashboardData = (id: string) => {
   const [loadedData] = useDashboardData(id);
   const [currentData, setCurrentData] = useState<DashboardConfig | undefined>();
-  const [currentId, setCurrentId] = useState(id);
 
   useEffect(() => {
-    if (!loadedData) return;
-    console.log("Loaded data for document", id);
+    if (!loadedData || currentData) return;
+    console.log("Initially loaded data for document", id);
     setCurrentData(loadedData.data());
-    setCurrentId(id);
-  }, [id, loadedData]);
+  }, [currentData, id, loadedData]);
 
   const persist = useStableHandler(async () => {
     if (!currentData) return;
-    console.log("Saving dashboard:", currentId, currentData);
+    console.log("Saving dashboard:", id, currentData);
     const lastEdit = Date.now();
     await updateDashboard(
-      currentId,
+      id,
       removeUndefinedValues({
         ...currentData,
         lastEdit,
@@ -37,6 +35,12 @@ export const useManagedDashboardData = (id: string) => {
   useDebouncedEffect(persist, [currentData], 4000, 20000);
   useWindowEvent("pagehide", persist);
   useWindowEvent("beforeunload", persist);
+  useEffect(
+    () => () => {
+      persist();
+    },
+    [persist],
+  );
 
   const onLayoutChange = useStableHandler((_, layouts: Layouts) => {
     if (!currentData) return;
