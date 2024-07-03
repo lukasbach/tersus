@@ -1,3 +1,10 @@
+.container {
+    background-color: light-dark(rgba(255, 255, 255, 0.7), rgba(46, 46, 46, 0.6)) !important;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
 /* TODO not used anymore, removed scrollarea from widget containers */
 .widgetScrollViewPort {
     min-height: 100%;

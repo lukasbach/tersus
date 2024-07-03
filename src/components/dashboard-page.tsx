@@ -21,6 +21,8 @@ import { AddWidgetBtn } from "./atoms/add-widget-btn.tsx";
 import { NavbarHeader } from "./atoms/navbar-header.tsx";
 import { ConfigureDashboardMenu } from "./atoms/configure-dashboard-menu.tsx";
 import { useDashboardList } from "../use-dashboard-list.ts";
+import { BgBlobs } from "./atoms/bg-blobs.tsx";
+import { useColorBlobs } from "./use-color-blobs.ts";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -30,6 +32,7 @@ export const DashboardPageInner: FC<{ id: string }> = ({ id }) => {
   const [widgetDrawerOpen, widgetDrawer] = useDisclosure(false);
   const { addRecent } = useDashboardList();
   const isMobile = useMediaQuery(`(max-width: ${em(1100)})`);
+  const [colorBlobs] = useColorBlobs();
 
   useEffect(() => {
     if (!dashboard.data) return;
@@ -55,7 +58,7 @@ export const DashboardPageInner: FC<{ id: string }> = ({ id }) => {
               {!isMobile ? "Add Widget" : <IconSquareRoundedPlus />}
             </Button>
 
-            <Menu shadow="md" width={200}>
+            <Menu shadow="md" width={240}>
               <Menu.Target>
                 <Button
                   radius="md"
@@ -88,6 +91,7 @@ export const DashboardPageInner: FC<{ id: string }> = ({ id }) => {
         })}
       </Drawer>
       <AppShell.Main bg="var(--board-bg)">
+        {colorBlobs && <BgBlobs />}
         <ResponsiveGridLayout
           className="layout"
           layouts={dashboard.data.layouts}

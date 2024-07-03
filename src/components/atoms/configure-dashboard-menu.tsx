@@ -5,18 +5,21 @@ import { promptText } from "../../modal-utils.tsx";
 import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
 import { createDashboard } from "../../firebase/app.ts";
 import { useDashboardList } from "../../use-dashboard-list.ts";
+import { useColorBlobs } from "../use-color-blobs.ts";
 
 export const ConfigureDashboardMenu: FC<{
   dashboard: ReturnType<typeof useManagedDashboardData>;
   dashboardId: string;
 }> = ({ dashboard, dashboardId }) => {
   const list = useDashboardList();
+  const [, setColorBlobs] = useColorBlobs();
   const isStarred = useMemo(
     () => list.starred.some((d) => d.id === dashboardId),
     [dashboardId, list.starred],
   );
   return (
     <Menu.Dropdown>
+      <Menu.Label>Dashboard</Menu.Label>
       <Menu.Item
         onClick={() => {
           if (isStarred) {
@@ -114,6 +117,17 @@ export const ConfigureDashboardMenu: FC<{
       >
         Copy share link
       </Menu.Item>
+
+      <Menu.Divider>
+        <Menu.Label>Tersus</Menu.Label>
+        <Menu.Item
+          onClick={() => {
+            setColorBlobs((val) => !val);
+          }}
+        >
+          Toggle Background Color Blobs
+        </Menu.Item>
+      </Menu.Divider>
     </Menu.Dropdown>
   );
 };

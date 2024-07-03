@@ -26,6 +26,7 @@ import { FloatingBarContainer } from "./atoms/floating-bar-container.tsx";
 import { FloatingBar } from "./atoms/floating-bar.tsx";
 import { WidgetConfigureWarning } from "./atoms/widget-configure-warning.tsx";
 import { OptionalWidgetHeader } from "./atoms/optional-widget-header.tsx";
+import styles from "./widget.module.css";
 
 const WidgetContainerInner: FC<{
   widgetId: string;
@@ -177,14 +178,7 @@ const WidgetContainerInner: FC<{
             </Menu.Dropdown>
           </Menu>
         </FloatingBar>
-        <Card
-          withBorder
-          shadow="sm"
-          radius="md"
-          w="100%"
-          h="100%"
-          pos="relative"
-        >
+        <Card className={styles.container} withBorder shadow="sm" radius="md">
           <Flex h="100%" direction="column">
             {renderProps.referenceResolved ? (
               <>
