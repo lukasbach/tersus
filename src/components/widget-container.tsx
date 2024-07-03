@@ -190,7 +190,7 @@ const WidgetContainerInner: FC<{
                 )}
                 <Box
                   style={{
-                    minHeight: "100%",
+                    flexGrow: "1",
                     overflow: "auto",
                   }}
                 >
