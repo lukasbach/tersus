@@ -24,6 +24,7 @@ export const recurringTodoWidget: WidgetDefinition<
     frequency: 1000 * 60 * 60 * 24 * 7,
     title: "Take out the trash",
   },
+  skipTitleComponent: true,
   sizing: { w: 4, h: 2, minW: 2, minH: 2, maxW: 4, maxH: 4 },
   DisplayComponent: ({ config }) => (
     <Center h="100%">

@@ -25,6 +25,7 @@ export const useWidgetRenderProps = (
       widget.config.referencingId &&
       dashboard.data?.widgets[widget.config.referencingId]?.config;
     return {
+      id: widgetId,
       icon: widgetDef.IconComponent,
       layout,
       config: widget.config,

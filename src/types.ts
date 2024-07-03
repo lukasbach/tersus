@@ -7,6 +7,7 @@ type DefaultConfig = {
 };
 
 export type WidgetRenderProps<T, R> = {
+  id: string;
   referenceResolved: boolean;
   config: T & DefaultConfig;
   onOpenEditModal: () => void;

@@ -12,6 +12,7 @@ import { dateTickerWidget } from "./date-ticker.tsx";
 import { recurringTodoListWidget } from "./recurring-todo-list.tsx";
 import { iframeWidget } from "./iframe.tsx";
 import { linkListWidget } from "./link-list.tsx";
+import { habitTrackerWidget } from "./habit-tracker.tsx";
 
 export const widgets = {
   counterWidget,
@@ -27,4 +28,5 @@ export const widgets = {
   dateTickerWidget,
   iframeWidget,
   linkListWidget,
+  habitTrackerWidget,
 } as Record<string, WidgetDefinition<any, any>>;
