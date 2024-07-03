@@ -6,12 +6,14 @@ import {
   Checkbox,
   Group,
   Input,
+  Menu,
   Paper,
   ScrollArea,
   Stack,
 } from "@mantine/core";
 import {
   IconCheck,
+  IconDots,
   IconPencil,
   IconSquareRounded,
   IconSquareRoundedCheck,
@@ -24,6 +26,7 @@ import { WidgetDefinition } from "../types.ts";
 import { randId } from "../utils.ts";
 import { FloatingBarContainer } from "../components/atoms/floating-bar-container.tsx";
 import { FloatingBar } from "../components/atoms/floating-bar.tsx";
+import { promptDate } from "../modal-utils.tsx";
 
 type TodoItem = {
   text: string;
@@ -114,6 +117,45 @@ export const todoListWidget: WidgetDefinition<
                   >
                     <IconTrash />
                   </ActionIcon>
+
+                  <Menu withinPortal position="bottom-end" shadow="sm">
+                    <Menu.Target>
+                      <ActionIcon variant="subtle" color="gray">
+                        <IconDots />
+                      </ActionIcon>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      <Menu.Item
+                        onClick={() => {
+                          promptDate({
+                            title: "Change Due Date",
+                            labels: { submit: "Change" },
+                            value: item.dueDate
+                              ? new Date(item.dueDate)
+                              : new Date(),
+                            onSubmitModal: (newDate) => {
+                              changeItem(item.id, {
+                                dueDate: newDate.getTime(),
+                              });
+                            },
+                          });
+                        }}
+                      >
+                        {item.dueDate ? "Change" : "Set"} Due Date
+                      </Menu.Item>
+                      {item.dueDate && (
+                        <Menu.Item
+                          onClick={() => {
+                            changeItem(item.id, {
+                              dueDate: undefined,
+                            });
+                          }}
+                        >
+                          Clear Due Date
+                        </Menu.Item>
+                      )}
+                    </Menu.Dropdown>
+                  </Menu>
                 </FloatingBar>
 
                 <Paper key={item.id} p="xs" mb="xs" shadow="xs" withBorder>

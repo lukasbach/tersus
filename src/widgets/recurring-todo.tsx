@@ -1,9 +1,10 @@
 import { Center } from "@mantine/core";
-import { IconCheck, IconClockHour8 } from "@tabler/icons-react";
+import { IconCalendar, IconCheck, IconClockHour8 } from "@tabler/icons-react";
 import ReactTimeAgo from "react-time-ago";
 import { WidgetDefinition } from "../types.ts";
 import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
 import { Stat } from "../components/atoms/stat.tsx";
+import { promptDate } from "../modal-utils.tsx";
 
 export const recurringTodoWidget: WidgetDefinition<
   {
@@ -50,6 +51,24 @@ export const recurringTodoWidget: WidgetDefinition<
       icon: () => <IconCheck />,
       text: "Done now!",
       action: (props) => props.onChange({ lastDone: Date.now() }),
+    },
+  ],
+  menuActions: [
+    {
+      icon: () => <IconCheck />,
+      text: "Set to completed now",
+      action: (props) => props.onChange({ lastDone: Date.now() }),
+    },
+    {
+      icon: () => <IconCalendar />,
+      text: "Set last completion date",
+      action: (props) => {
+        promptDate({
+          title: "Set last completion date",
+          labels: { submit: "Set date" },
+          onSubmitModal: (date) => props.onChange({ lastDone: date.getTime() }),
+        });
+      },
     },
   ],
   ConfigComponent: ({ config, onChange }) => (

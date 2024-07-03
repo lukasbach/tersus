@@ -13,6 +13,7 @@ import {
 import {
   IconBell,
   IconBellRinging,
+  IconCalendar,
   IconClockHour8,
   IconSquareRounded,
   IconSquareRoundedCheck,
@@ -25,6 +26,7 @@ import { randId } from "../utils.ts";
 import { WidgetConfigureWarning } from "../components/atoms/widget-configure-warning.tsx";
 import { FloatingBarContainer } from "../components/atoms/floating-bar-container.tsx";
 import { FloatingBar } from "../components/atoms/floating-bar.tsx";
+import { promptDate } from "../modal-utils.tsx";
 
 type Todo = {
   title: string;
@@ -106,6 +108,24 @@ export const recurringTodoListWidget: WidgetDefinition<
                   }}
                 >
                   <IconSquareRoundedCheck />
+                </ActionIcon>
+                <ActionIcon
+                  aria-label="Set completion date"
+                  variant="subtle"
+                  color="gray"
+                  onClick={() => {
+                    promptDate({
+                      title: "Set last completion date",
+                      labels: { submit: "Set date" },
+                      onSubmitModal: (date) => {
+                        // eslint-disable-next-line no-param-reassign
+                        todo.lastDone = date.getTime();
+                        onChange({ todos: config.todos });
+                      },
+                    });
+                  }}
+                >
+                  <IconCalendar />
                 </ActionIcon>
               </FloatingBar>
               <Tooltip
