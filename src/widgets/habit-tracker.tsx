@@ -5,7 +5,6 @@ import {
   Checkbox,
   Flex,
   Group,
-  Input,
   Table,
   Text,
   TextInput,
@@ -18,7 +17,6 @@ import {
 import { useResizeObserver } from "@mantine/hooks";
 import { RefObject, memo, useMemo, useState } from "react";
 import { WidgetDefinition, WidgetRenderProps } from "../types.ts";
-import { FrequencyInput } from "../components/atoms/frequency-input.tsx";
 import { FieldList } from "../components/atoms/field-list.tsx";
 import { randId } from "../utils.ts";
 import { FloatingBarContainer } from "../components/atoms/floating-bar-container.tsx";
@@ -28,7 +26,6 @@ type HabitEntry = {
   key: string;
   done: string[];
   title: string;
-  frequency: number;
 };
 type Config = { habits: HabitEntry[]; colored: boolean };
 
@@ -234,16 +231,6 @@ export const habitTrackerWidget: WidgetDefinition<Config, undefined> = {
                 })
               }
             />
-            <Box w="280px">
-              <FrequencyInput
-                label="Frequency"
-                value={value.frequency}
-                onChangeFrequency={(frequency) => onChange({ frequency })}
-              />
-              <Input.Description>
-                How often should this task be done?
-              </Input.Description>
-            </Box>
           </Group>
         )}
         createItem={() => ({
