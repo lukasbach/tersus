@@ -18,11 +18,11 @@ import { useResizeObserver } from "@mantine/hooks";
 import { RefObject, memo, useMemo, useState } from "react";
 import { WidgetDefinition, WidgetRenderProps } from "../types.ts";
 import { FieldList } from "../components/atoms/field-list.tsx";
-import { randId } from "../utils.ts";
+import { getColor, randId } from "../utils.ts";
 import { FloatingBarContainer } from "../components/atoms/floating-bar-container.tsx";
 import { FloatingBar } from "../components/atoms/floating-bar.tsx";
 
-type HabitEntry = {
+export type HabitEntry = {
   key: string;
   done: string[];
   title: string;
@@ -31,16 +31,6 @@ type Config = { habits: HabitEntry[]; colored: boolean };
 
 const FIRST_COL_W = 200;
 const HABIT_COL_W = 50;
-const colors = [
-  "red",
-  "indigo",
-  "orange",
-  "green",
-  "yellow",
-  "cyan",
-  "blue",
-  "purple",
-];
 const weekday = [
   "Sunday",
   "Monday",
@@ -51,8 +41,8 @@ const weekday = [
   "Saturday",
 ];
 
-const toDateKey = (date: Date) => {
-  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+export const toDateKey = (date: Date) => {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 const getDateArray = (start: Date, count: number) => {
   return Array.from({ length: count }, (_, i) => {
@@ -121,9 +111,7 @@ const DisplayComponent = ({
         </Table.Thead>
         <Table.Tbody>
           {config.habits.map((habit, habitIndex) => {
-            const color = config.colored
-              ? colors[habitIndex % colors.length]
-              : undefined;
+            const color = config.colored ? getColor(habitIndex) : undefined;
             return (
               <Table.Tr>
                 <Table.Td>
@@ -159,7 +147,9 @@ const DisplayComponent = ({
                           }
                           onChange({
                             habits: config.habits.map((habit, index) =>
-                              index === habitIndex ? { ...habit, done } : habit,
+                              index === habitIndex
+                                ? { ...habit, done: Array.from(done) }
+                                : habit,
                             ),
                           });
                         }}

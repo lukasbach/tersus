@@ -1,0 +1,6 @@
+.habitTrackerBtn {
+    opacity: 0.9;
+}
+.habitTrackerBtn:hover {
+    opacity: 1;
+}

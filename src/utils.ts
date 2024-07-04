@@ -1,5 +1,16 @@
 import { useCallback, useRef } from "react";
 
+const colors = [
+  "red",
+  "indigo",
+  "orange",
+  "green",
+  "yellow",
+  "cyan",
+  "blue",
+  "purple",
+];
+
 export const isNotNullish = <T>(value: T | null | undefined): value is T =>
   value !== undefined && value !== null;
 
@@ -54,3 +65,5 @@ export const randomInteger = (min: number, max: number) =>
 
 export const visualRound = (value: number, precision = 2) =>
   Math.round(value * 10 ** precision) / 10 ** precision;
+
+export const getColor = (index: number) => colors[index % colors.length];
