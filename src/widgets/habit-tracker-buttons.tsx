@@ -106,29 +106,26 @@ export const habitTrackerButtonsWidget: WidgetDefinition<
     title: "",
   },
   sizing: { w: 4, h: 2 },
-  DisplayComponent: ({ referencing }) => {
-    const theme = useMantineTheme();
-    return (
-      <Center h="100%">
-        <Group>
-          {referencing?.config.habits.map((habit, habitIndex) => {
-            return (
-              <HabitBtn
-                habit={habit}
-                habitIndex={habitIndex}
-                onChange={(updated) => {
-                  referencing?.onChange({
-                    habits: referencing.config.habits.map((h, i) =>
-                      i === habitIndex ? updated : h,
-                    ),
-                  });
-                }}
-                key={habit.key}
-              />
-            );
-          })}
-        </Group>
-      </Center>
-    );
-  },
+  DisplayComponent: ({ referencing }) => (
+    <Center h="100%">
+      <Group>
+        {referencing?.config.habits.map((habit, habitIndex) => {
+          return (
+            <HabitBtn
+              habit={habit}
+              habitIndex={habitIndex}
+              onChange={(updated) => {
+                referencing?.onChange({
+                  habits: referencing.config.habits.map((h, i) =>
+                    i === habitIndex ? updated : h,
+                  ),
+                });
+              }}
+              key={habit.key}
+            />
+          );
+        })}
+      </Group>
+    </Center>
+  ),
 };

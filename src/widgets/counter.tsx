@@ -1,9 +1,17 @@
 import { Center, NumberFormatter } from "@mantine/core";
-import { Icon123, IconMinus, IconPlus, IconRotate } from "@tabler/icons-react";
+import {
+  Icon123,
+  IconExposurePlus2,
+  IconMinus,
+  IconPencilCog,
+  IconPlus,
+  IconRotate,
+} from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { WidgetDefinition } from "../types.ts";
 import { Stat } from "../components/atoms/stat.tsx";
 import { visualRound } from "../utils.ts";
+import { promptNumber } from "../modal-utils.tsx";
 
 export type HistoryItem = {
   from: number;
@@ -72,6 +80,34 @@ export const counterWidget: WidgetDefinition<Payload, undefined> = {
     },
   ],
   menuActions: [
+    {
+      icon: () => <IconExposurePlus2 />,
+      text: "Add custom value",
+      action: (props) =>
+        promptNumber({
+          title: "Add custom value",
+          children: "Which value do you want to add to the current count?",
+          labels: { submit: "Add value" },
+          onSubmitModal: (value) =>
+            applyCounterChange(props.config, props.onChange, value),
+        }),
+    },
+    {
+      icon: () => <IconPencilCog />,
+      text: "Set to custom value",
+      action: (props) =>
+        promptNumber({
+          title: "Set to custom value",
+          children: "Which value do you want to set the counter to?",
+          labels: { submit: "Set value" },
+          onSubmitModal: (value) =>
+            applyCounterChange(
+              props.config,
+              props.onChange,
+              value - props.config.value,
+            ),
+        }),
+    },
     {
       icon: () => <IconRotate />,
       text: "Reset",
