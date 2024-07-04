@@ -15,6 +15,7 @@ import {
 } from "@mantine/core";
 import { IconBrandGithub, IconHeart, IconTablePlus } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
+import { useDocumentTitle } from "@mantine/hooks";
 import { NavbarHeader } from "./atoms/navbar-header.tsx";
 import { BgBlobs } from "./atoms/bg-blobs.tsx";
 import styles from "./home-page.module.css";
@@ -25,6 +26,7 @@ import { links } from "../pagedata.ts";
 
 export const HomePage: FC = () => {
   const theme = useComputedColorScheme();
+  useDocumentTitle("Tersus - Simple dashboarding tool");
   return (
     <AppShell header={{ height: 60 }}>
       <AppShell.Header>

@@ -11,7 +11,7 @@ import {
   Text,
   em,
 } from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useDisclosure, useDocumentTitle, useMediaQuery } from "@mantine/hooks";
 import {
   IconAdjustments,
   IconSquareRoundedPlus,
@@ -38,6 +38,8 @@ export const DashboardPageInner: FC<{ id: string }> = ({ id }) => {
   const { addRecent } = useDashboardList();
   const isMobile = useMediaQuery(`(max-width: ${em(1100)})`);
   const [colorBlobs] = useColorBlobs();
+
+  useDocumentTitle(`${dashboard.data?.title ?? "Dashboard"} - Tersus`);
 
   useEffect(() => {
     if (!dashboard.data) return;
