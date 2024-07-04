@@ -14,20 +14,20 @@ import {
   IconLayoutBoard,
   IconMoon,
   IconSun,
-  IconTablePlus,
 } from "@tabler/icons-react";
 import { useMediaQuery } from "@mantine/hooks";
-import { createDashboard } from "../../firebase/app.ts";
+import { Link } from "@tanstack/react-router";
 import { RecentDashboardsMenu } from "./recent-dashboards-menu.tsx";
+import { links } from "../../pagedata.ts";
 
 export const NavbarHeader: FC<
-  PropsWithChildren<{ currentDashboardId: string }>
+  PropsWithChildren<{ currentDashboardId?: string }>
 > = ({ children, currentDashboardId }) => {
   const { toggleColorScheme, colorScheme } = useMantineColorScheme();
   const isMobile = useMediaQuery(`(max-width: ${em(1100)})`);
   return (
     <Group gap="xs">
-      <UnstyledButton>
+      <UnstyledButton component={Link} to="/">
         <Group gap="xs" mr="lg">
           <IconLayoutBoard />
           <Text size="md" fw="600">
@@ -43,7 +43,15 @@ export const NavbarHeader: FC<
         </Menu.Target>
         <RecentDashboardsMenu currentDashboardId={currentDashboardId} />
       </Menu>
-      <ActionIcon size="lg" variant="default" radius="md">
+      <ActionIcon
+        size="lg"
+        variant="default"
+        radius="md"
+        component={Link}
+        to={links.github}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <IconBrandGithub />
       </ActionIcon>
       <ActionIcon
@@ -54,21 +62,6 @@ export const NavbarHeader: FC<
       >
         {colorScheme !== "dark" ? <IconMoon /> : <IconSun />}
       </ActionIcon>
-      <Button
-        variant="subtle"
-        leftSection={!isMobile && <IconTablePlus />}
-        onClick={async () => {
-          // TODO Default dashboard
-          const { id } = await createDashboard({
-            widgets: {},
-            layouts: {},
-            title: `My new dashboard`,
-          });
-          window.open(`#/board/${id}`, "_blank");
-        }}
-      >
-        {!isMobile ? "Create Dashboard" : <IconTablePlus />}
-      </Button>
       {children}
     </Group>
   );

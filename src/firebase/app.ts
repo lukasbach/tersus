@@ -51,6 +51,14 @@ export const createDashboard = (
     createdAt: Date.now(),
     editedAfterWeek: false,
   });
+export const createDashboardFromTemplate = async (
+  template: string,
+  navigate = false,
+) => {
+  const response = await fetch(`/samples/${template}.json`);
+  const { id: dashboardId } = await createDashboard(await response.json());
+  if (navigate) window.open(`#/board/${dashboardId}`, "_blank");
+};
 
 export const deleteDashboard = (id: string) => deleteDoc(getDashboardDoc(id));
 export const updateDashboard = (id: string, data: DashboardConfig) =>

@@ -1,11 +1,13 @@
 import { FC, useMemo } from "react";
 import { Menu } from "@mantine/core";
 import { modals } from "@mantine/modals";
+import { Link } from "@tanstack/react-router";
 import { promptText } from "../../modal-utils.tsx";
 import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
 import { createDashboard } from "../../firebase/app.ts";
 import { useDashboardList } from "../../use-dashboard-list.ts";
 import { useColorBlobs } from "../use-color-blobs.ts";
+import { links } from "../../pagedata.ts";
 
 export const ConfigureDashboardMenu: FC<{
   dashboard: ReturnType<typeof useManagedDashboardData>;
@@ -126,6 +128,14 @@ export const ConfigureDashboardMenu: FC<{
           }}
         >
           Toggle Background Color Blobs
+        </Menu.Item>
+        <Menu.Item
+          component={Link}
+          to={links.sponsor}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Sponsor Tersus
         </Menu.Item>
       </Menu.Divider>
     </Menu.Dropdown>

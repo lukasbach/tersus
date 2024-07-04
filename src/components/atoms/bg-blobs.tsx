@@ -32,6 +32,7 @@ export const BgBlobs: FC<{}> = ({}) => {
       right="0"
       bottom="0"
       bg={scheme === "dark" ? "#303030" : "#fff"}
+      style={{ zIndex: 0 }}
     >
       <Blob left="0%" top="-30%" w={1000} color="#CC5DE888" />
       <Blob left="30%" top="00%" w={1200} h={600} color="#339AF088" />

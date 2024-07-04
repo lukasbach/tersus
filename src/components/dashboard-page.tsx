@@ -12,7 +12,11 @@ import {
   em,
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { IconAdjustments, IconSquareRoundedPlus } from "@tabler/icons-react";
+import {
+  IconAdjustments,
+  IconSquareRoundedPlus,
+  IconTablePlus,
+} from "@tabler/icons-react";
 import { boardViewRoute } from "../router.tsx";
 import { widgets } from "../widgets";
 import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
@@ -23,6 +27,7 @@ import { ConfigureDashboardMenu } from "./atoms/configure-dashboard-menu.tsx";
 import { useDashboardList } from "../use-dashboard-list.ts";
 import { BgBlobs } from "./atoms/bg-blobs.tsx";
 import { useColorBlobs } from "./use-color-blobs.ts";
+import { createDashboardFromTemplate } from "../firebase/app.ts";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -45,7 +50,15 @@ export const DashboardPageInner: FC<{ id: string }> = ({ id }) => {
     <AppShell header={{ height: 60 }}>
       <AppShell.Header>
         <Flex h="100%" align="center" justify="space-between" p="lg">
-          <NavbarHeader currentDashboardId={id} />
+          <NavbarHeader currentDashboardId={id}>
+            <Button
+              variant="subtle"
+              leftSection={!isMobile && <IconTablePlus />}
+              onClick={() => createDashboardFromTemplate("empty", true)}
+            >
+              {!isMobile ? "Create Dashboard" : <IconTablePlus />}
+            </Button>
+          </NavbarHeader>
           <Box>
             <Text fw="600">{dashboard.data.title}</Text>
           </Box>

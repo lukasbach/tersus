@@ -1,15 +1,14 @@
 import { FC, useMemo } from "react";
 import { Menu } from "@mantine/core";
-import { useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { IconStar } from "@tabler/icons-react";
 import { useDashboardList } from "../../use-dashboard-list.ts";
 import { boardViewRoute } from "../../router.tsx";
 
 export const RecentDashboardsMenu: FC<{
-  currentDashboardId: string;
+  currentDashboardId?: string;
 }> = ({ currentDashboardId }) => {
   const list = useDashboardList();
-  const navigate = useNavigate();
 
   const starred = useMemo(
     () => list.starred.filter(({ id }) => id !== currentDashboardId),
@@ -38,9 +37,9 @@ export const RecentDashboardsMenu: FC<{
         <Menu.Item
           key={id}
           leftSection={<IconStar />}
-          onClick={() =>
-            navigate({ to: boardViewRoute.fullPath, params: { id } })
-          }
+          component={Link}
+          to={boardViewRoute.fullPath}
+          params={{ id }}
         >
           {title}
         </Menu.Item>
@@ -48,9 +47,9 @@ export const RecentDashboardsMenu: FC<{
       {recent.map(({ id, title }) => (
         <Menu.Item
           key={id}
-          onClick={() =>
-            navigate({ to: boardViewRoute.fullPath, params: { id } })
-          }
+          component={Link}
+          to={boardViewRoute.fullPath}
+          params={{ id }}
         >
           {title}
         </Menu.Item>

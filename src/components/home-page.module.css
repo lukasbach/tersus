@@ -1,0 +1,40 @@
+.headerImg {
+    width: 90%;
+    max-width: 1000px;
+    border-radius: var(--mantine-radius-lg);
+    box-shadow: var(--mantine-shadow-lg);
+    border: 1px solid var(--mantine-color-default-border);
+    margin-top: 2rem;
+}
+
+.title {
+    margin-top: 3rem !important;
+    margin-bottom: 1.7rem !important;
+    font-size: 4rem !important;
+    line-height: .8 !important;
+    font-weight: 900 !important;
+    color: light-dark(black, white) !important;
+}
+
+.subtext {
+    font-size: 1.3rem !important;
+    color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-gray-5)) !important;
+    margin-bottom: .8rem !important;
+}
+
+.templateImg {
+    border-radius: var(--mantine-radius-lg);
+    border: 1px solid var(--mantine-color-default-border);
+    max-width: 1000px;
+    @media (max-width: 1300px) {
+        max-width: unset !important;
+        width: 90%;
+    }
+}
+
+.sampleGroup {
+    flex-wrap: nowrap !important;
+    @media (max-width: 1300px) {
+        flex-wrap: wrap !important;
+    }
+}
