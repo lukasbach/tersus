@@ -7,4 +7,6 @@ export const links = {
     medium: "https://medium.com/@lukasbach",
     web: "https://lukasbach.com",
   },
+  privacy: "https://lukasbach.com/privacy-en",
+  impress: "https://lukasbach.com/impress/",
 };

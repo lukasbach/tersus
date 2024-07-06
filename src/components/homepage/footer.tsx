@@ -15,6 +15,13 @@ const data = [
     links: [{ label: "Github Project", link: links.github }],
   },
   {
+    title: "About",
+    links: [
+      { label: "Privacy Policy", link: links.privacy },
+      { label: "Impress", link: links.impress },
+    ],
+  },
+  {
     title: "More from me",
     links: [
       { label: "My GitHub profile", link: links.social.github },
