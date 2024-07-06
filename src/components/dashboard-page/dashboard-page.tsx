@@ -17,17 +17,17 @@ import {
   IconSquareRoundedPlus,
   IconTablePlus,
 } from "@tabler/icons-react";
-import { boardViewRoute } from "../router.tsx";
-import { widgets } from "../widgets";
-import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
+import { boardViewRoute } from "../../router.tsx";
+import { widgets } from "../../widgets";
+import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
 import { WidgetContainer } from "./widget-container.tsx";
-import { AddWidgetBtn } from "./atoms/add-widget-btn.tsx";
-import { NavbarHeader } from "./atoms/navbar-header.tsx";
-import { ConfigureDashboardMenu } from "./atoms/configure-dashboard-menu.tsx";
-import { useDashboardList } from "../use-dashboard-list.ts";
-import { BgBlobs } from "./atoms/bg-blobs.tsx";
-import { useColorBlobs } from "./use-color-blobs.ts";
-import { createDashboardFromTemplate } from "../firebase/app.ts";
+import { AddWidgetBtn } from "../atoms/add-widget-btn.tsx";
+import { NavbarHeader } from "../atoms/navbar-header.tsx";
+import { ConfigureDashboardMenu } from "../atoms/configure-dashboard-menu.tsx";
+import { useDashboardList } from "../../use-dashboard-list.ts";
+import { BgBlobs } from "../atoms/bg-blobs.tsx";
+import { useColorBlobs } from "../../use-color-blobs.ts";
+import { createDashboardFromTemplate } from "../../firebase/app.ts";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 

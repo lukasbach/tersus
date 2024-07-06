@@ -19,13 +19,13 @@ import {
 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { modals } from "@mantine/modals";
-import { widgets } from "../widgets";
+import { widgets } from "../../widgets";
 import { useWidgetRenderProps } from "./use-widget-render-props.tsx";
-import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
-import { FloatingBarContainer } from "./atoms/floating-bar-container.tsx";
-import { FloatingBar } from "./atoms/floating-bar.tsx";
-import { WidgetConfigureWarning } from "./atoms/widget-configure-warning.tsx";
-import { OptionalWidgetHeader } from "./atoms/optional-widget-header.tsx";
+import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
+import { FloatingBarContainer } from "../atoms/floating-bar-container.tsx";
+import { FloatingBar } from "../atoms/floating-bar.tsx";
+import { WidgetConfigureWarning } from "../atoms/widget-configure-warning.tsx";
+import { OptionalWidgetHeader } from "../atoms/optional-widget-header.tsx";
 import styles from "./widget.module.css";
 
 const WidgetContainerInner: FC<{

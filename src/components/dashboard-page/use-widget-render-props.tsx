@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { WidgetRenderProps } from "../types.ts";
-import { widgets } from "../widgets";
-import { useManagedDashboardData } from "../use-managed-dashboard-data.ts";
+import { WidgetRenderProps } from "../../types.ts";
+import { widgets } from "../../widgets";
+import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
 
 export const useWidgetRenderProps = (
   widgetId: string,

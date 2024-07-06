@@ -6,8 +6,8 @@ import {
   createRouter,
   defaultParseSearch,
 } from "@tanstack/react-router";
-import { DashboardPage } from "./components/dashboard-page.tsx";
-import { HomePage } from "./components/home-page.tsx";
+import { DashboardPage } from "./components/dashboard-page/dashboard-page.tsx";
+import { HomePage } from "./components/homepage/home-page.tsx";
 
 const rootRoute = createRootRoute({
   component: () => <Outlet />,

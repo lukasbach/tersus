@@ -16,13 +16,13 @@ import {
 import { IconBrandGithub, IconHeart, IconTablePlus } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import { useDocumentTitle } from "@mantine/hooks";
-import { NavbarHeader } from "./atoms/navbar-header.tsx";
-import { BgBlobs } from "./atoms/bg-blobs.tsx";
+import { NavbarHeader } from "../atoms/navbar-header.tsx";
+import { BgBlobs } from "../atoms/bg-blobs.tsx";
 import styles from "./home-page.module.css";
-import { widgets } from "../widgets";
-import { sampleDashboards } from "../sample-dashboards.ts";
-import { createDashboardFromTemplate } from "../firebase/app.ts";
-import { links } from "../pagedata.ts";
+import { widgets } from "../../widgets";
+import { sampleDashboards } from "../../sample-dashboards.ts";
+import { createDashboardFromTemplate } from "../../firebase/app.ts";
+import { links } from "../../pagedata.ts";
 
 export const HomePage: FC = () => {
   const theme = useComputedColorScheme();

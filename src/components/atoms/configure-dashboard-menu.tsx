@@ -6,7 +6,7 @@ import { promptText } from "../../modal-utils.tsx";
 import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
 import { createDashboard } from "../../firebase/app.ts";
 import { useDashboardList } from "../../use-dashboard-list.ts";
-import { useColorBlobs } from "../use-color-blobs.ts";
+import { useColorBlobs } from "../../use-color-blobs.ts";
 import { links } from "../../pagedata.ts";
 
 export const ConfigureDashboardMenu: FC<{
