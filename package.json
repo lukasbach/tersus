@@ -1,5 +1,20 @@
 {
   "name": "tersus",
+  "description": "A simple dashboarding tool to keep track of everyday tasks",
+  "author": "Lukas Bach",
+  "keywords": [
+    "dashboard",
+    "tasks",
+    "productivity",
+    "webapp",
+    "counter",
+    "todo",
+    "notes",
+    "history",
+    "graph",
+    "date",
+    "timer"
+  ],
   "type": "module",
   "version": "0.0.0",
   "private": true,
