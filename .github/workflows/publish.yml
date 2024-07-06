@@ -1,0 +1,27 @@
+name: Publish
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: volta-cli/action@v4
+      - run: yarn install
+      - run: yarn run lint
+      - run: yarn run build
+      - uses: actions/upload-pages-artifact@v3
+        id: artifact
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
