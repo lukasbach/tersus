@@ -1,14 +1,15 @@
 # Tersus
 
-> A simple dashboarding tool to keep track of everyday tasks
+> A simple dashboarding tool to keep track of everyday tasks.
+> Completely in your browser, no registration required.
 
 <div align="center">
+    Get started by creating a new dashboard in the
     <a href="https://tersus.lukasbach.com">
         Tersus App
     </a>
 </div>
-
-
+<br/>
 
 <div align="center">
     <img src="https://github.com/lukasbach/tersus/raw/main/public/dashboards/sample-dark.png" alt="Preview image of Pensieve" />
