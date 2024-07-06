@@ -22,7 +22,7 @@ const Blob: FC<{
   );
 };
 
-export const BgBlobs: FC<{}> = ({}) => {
+export const BgBlobs: FC = () => {
   const scheme = useComputedColorScheme();
   return (
     <Box
