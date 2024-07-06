@@ -23,6 +23,7 @@ import { widgets } from "../../widgets";
 import { sampleDashboards } from "../../sample-dashboards.ts";
 import { createDashboardFromTemplate } from "../../firebase/app.ts";
 import { links } from "../../pagedata.ts";
+import { Footer } from "./footer.tsx";
 
 export const HomePage: FC = () => {
   const theme = useComputedColorScheme();
@@ -199,6 +200,7 @@ export const HomePage: FC = () => {
               Create Dashboard
             </Button>
           </Center>
+          <Footer />
         </Box>
       </AppShell.Main>
     </AppShell>
