@@ -2,19 +2,33 @@ import { FC, useMemo } from "react";
 import { Menu } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { Link } from "@tanstack/react-router";
+import {
+  IconArrowFork,
+  IconHeart,
+  IconLink,
+  IconPencil,
+  IconPin,
+  IconPinned,
+  IconSquareRounded,
+  IconSquareRoundedCheck,
+  IconTableExport,
+  IconTableImport,
+} from "@tabler/icons-react";
 import { promptText } from "../../modal-utils.tsx";
 import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
 import { createDashboard } from "../../firebase/app.ts";
 import { useDashboardList } from "../../use-dashboard-list.ts";
 import { useColorBlobs } from "../../use-color-blobs.ts";
 import { links } from "../../pagedata.ts";
+import { useDebugMode } from "../../use-debug-mode.ts";
 
 export const ConfigureDashboardMenu: FC<{
   dashboard: ReturnType<typeof useManagedDashboardData>;
   dashboardId: string;
 }> = ({ dashboard, dashboardId }) => {
   const list = useDashboardList();
-  const [, setColorBlobs] = useColorBlobs();
+  const [colorBlobs, setColorBlobs] = useColorBlobs();
+  const [debugMode, setDebugMode] = useDebugMode();
   const isStarred = useMemo(
     () => list.starred.some((d) => d.id === dashboardId),
     [dashboardId, list.starred],
@@ -23,6 +37,7 @@ export const ConfigureDashboardMenu: FC<{
     <Menu.Dropdown>
       <Menu.Label>Dashboard</Menu.Label>
       <Menu.Item
+        leftSection={isStarred ? <IconPinned /> : <IconPin />}
         onClick={() => {
           if (isStarred) {
             list.removeStarred(dashboardId);
@@ -38,6 +53,7 @@ export const ConfigureDashboardMenu: FC<{
       </Menu.Item>
 
       <Menu.Item
+        leftSection={<IconPencil />}
         onClick={() =>
           promptText({
             title: "Rename dashboard",
@@ -51,6 +67,7 @@ export const ConfigureDashboardMenu: FC<{
       </Menu.Item>
 
       <Menu.Item
+        leftSection={<IconTableExport />}
         onClick={() => {
           const data = JSON.stringify(dashboard.data);
           const blob = new Blob([data], { type: "application/json" });
@@ -66,6 +83,7 @@ export const ConfigureDashboardMenu: FC<{
       </Menu.Item>
 
       <Menu.Item
+        leftSection={<IconTableImport />}
         onClick={() => {
           const input = document.createElement("input");
           input.type = "file";
@@ -91,6 +109,7 @@ export const ConfigureDashboardMenu: FC<{
       </Menu.Item>
 
       <Menu.Item
+        leftSection={<IconArrowFork />}
         onClick={() => {
           modals.openConfirmModal({
             title: "Fork dashboard",
@@ -113,6 +132,7 @@ export const ConfigureDashboardMenu: FC<{
       </Menu.Item>
 
       <Menu.Item
+        leftSection={<IconLink />}
         onClick={() => {
           navigator.clipboard.writeText(window.location.href.toString());
         }}
@@ -123,17 +143,31 @@ export const ConfigureDashboardMenu: FC<{
       <Menu.Divider>
         <Menu.Label>Tersus</Menu.Label>
         <Menu.Item
+          leftSection={
+            colorBlobs ? <IconSquareRoundedCheck /> : <IconSquareRounded />
+          }
           onClick={() => {
             setColorBlobs((val) => !val);
           }}
         >
-          Toggle Background Color Blobs
+          Background Color Blobs
+        </Menu.Item>
+        <Menu.Item
+          leftSection={
+            debugMode ? <IconSquareRoundedCheck /> : <IconSquareRounded />
+          }
+          onClick={() => {
+            setDebugMode((val) => !val);
+          }}
+        >
+          Debug Mode
         </Menu.Item>
         <Menu.Item
           component={Link}
           to={links.sponsor}
           target="_blank"
           rel="noopener noreferrer"
+          leftSection={<IconHeart />}
         >
           Sponsor Tersus
         </Menu.Item>

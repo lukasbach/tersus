@@ -12,6 +12,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import {
+  IconBug,
   IconDots,
   IconGripVertical,
   IconPencil,
@@ -27,6 +28,7 @@ import { FloatingBar } from "../atoms/floating-bar.tsx";
 import { WidgetConfigureWarning } from "../atoms/widget-configure-warning.tsx";
 import { OptionalWidgetHeader } from "../atoms/optional-widget-header.tsx";
 import styles from "./widget.module.css";
+import { useDebugMode } from "../../use-debug-mode.ts";
 
 const WidgetContainerInner: FC<{
   widgetId: string;
@@ -34,6 +36,7 @@ const WidgetContainerInner: FC<{
   breakpoint: string;
 }> = ({ dashboard, widgetId, breakpoint }) => {
   const [settingsOpen, settings] = useDisclosure(false);
+  const [debugMode] = useDebugMode();
 
   const widget = dashboard.data!.widgets[widgetId];
   const widgetDef = widgets[widget.type];
@@ -160,6 +163,26 @@ const WidgetContainerInner: FC<{
               >
                 Configure Widget
               </Menu.Item>
+
+              {debugMode && (
+                <Menu.Item
+                  leftSection={<IconBug />}
+                  onClick={() => {
+                    console.log(
+                      `Widget-data of ${widget.type}/${renderProps.id}:`,
+                      widget.config,
+                    );
+                    modals.open({
+                      title: `Widget-data of ${widget.type}/${renderProps.id}`,
+                      children: (
+                        <pre>{JSON.stringify(widget.config, null, 2)}</pre>
+                      ),
+                    });
+                  }}
+                >
+                  Show payload
+                </Menu.Item>
+              )}
 
               <Menu.Item
                 leftSection={<IconTrash />}
