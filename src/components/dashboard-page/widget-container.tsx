@@ -78,7 +78,9 @@ const WidgetContainerInner: FC<{
                 .filter(([, w]) => widgets[w.type] === widgetDef.referencing)
                 .map(([id, widget]) => ({
                   value: id,
-                  label: widget.config.title,
+                  label:
+                    widget.config.title ||
+                    `Unnamed ${widgets[widget.type].name} widget`,
                 }))}
               value={widget.config.referencingId}
               onChange={(value) =>

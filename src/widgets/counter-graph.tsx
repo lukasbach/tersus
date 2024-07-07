@@ -23,28 +23,16 @@ const regroupHistoryItems = (
   width: number,
   config: Payload,
 ) => {
-  const relevantItems = items.filter(
-    (item) => item.from > Date.now() - config.goingBack,
-  );
-  if (relevantItems.length === 0 && items.length > 0)
-    relevantItems.push(items.at(-1)!);
-
-  // TODO this defaults to never being 0 at the start of the graph
+  const reversedItems = items.slice().reverse();
+  const timeslice = config.goingBack / (width * 3);
 
   const now = Date.now();
   const newItems: any[] = [];
   for (let i = 0; i < width * 3; i++) {
-    const item = relevantItems.find(
-      (item) => item.to > now - (config.goingBack / width) * i,
-    );
-    const lastCount =
-      newItems.at(-1)?.[name] ?? relevantItems.at(-1)?.value ?? 0;
+    const item = reversedItems.find((item) => item.from < now - timeslice * i);
     newItems.push({
-      date: stringifyDate(
-        new Date(now - (config.goingBack / width) * i),
-        config.goingBack,
-      ),
-      [name]: item?.value ?? lastCount,
+      date: stringifyDate(new Date(now - timeslice * i), config.goingBack),
+      [name]: item?.value ?? 0,
     });
   }
   return newItems.reverse();
