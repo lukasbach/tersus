@@ -14,8 +14,7 @@ import {
   IconArrowRight,
   IconCalendarMonth,
 } from "@tabler/icons-react";
-import { useResizeObserver } from "@mantine/hooks";
-import { RefObject, memo, useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { WidgetDefinition, WidgetRenderProps } from "../types.ts";
 import { FieldList } from "../components/atoms/field-list.tsx";
 import { getColor, randId } from "../utils.ts";
@@ -60,14 +59,13 @@ const addDays = (date: Date, days: number) => {
   return newDate;
 };
 
+// TODO doesnt need to be memoized anymore
 const DisplayComponent = ({
   config,
   onChange,
   colCount,
-  resizeRef,
 }: WidgetRenderProps<Config, undefined> & {
   colCount: number;
-  resizeRef: RefObject<any>;
 }) => {
   const [startDate, setStartDate] = useState(new Date());
   const dates = useMemo(
@@ -96,7 +94,7 @@ const DisplayComponent = ({
           <IconArrowRight />
         </ActionIcon>
       </FloatingBar>
-      <Table striped highlightOnHover withColumnBorders ref={resizeRef}>
+      <Table striped highlightOnHover withColumnBorders>
         <Table.Thead>
           <Table.Tr>
             <Table.Th w={`${FIRST_COL_W}px`}>Habit</Table.Th>
@@ -179,19 +177,20 @@ export const habitTrackerWidget: WidgetDefinition<Config, undefined> = {
   ],
   default: {
     title: "Habit Tracker",
-    habits: [],
+    habits: [
+      { title: "Excercise", done: [], key: randId() },
+      { title: "Read", done: [], key: randId() },
+    ],
     colored: true,
   },
   sizing: { w: 4, h: 2 },
   DisplayComponent: (props) => {
-    const [ref, rect] = useResizeObserver();
     const colCount = Math.max(
       2,
-      Math.floor((rect.width - FIRST_COL_W) / HABIT_COL_W),
+      // eslint-disable-next-line react/destructuring-assignment
+      Math.floor((props.rect.width - FIRST_COL_W) / HABIT_COL_W),
     );
-    return (
-      <DisplayComponentMemo {...props} colCount={colCount} resizeRef={ref} />
-    );
+    return <DisplayComponentMemo {...props} colCount={colCount} />;
   },
   ConfigComponent: ({ config, onChange }) => (
     <>
