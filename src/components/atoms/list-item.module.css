@@ -1,0 +1,25 @@
+.container {
+    border-radius: var(--mantine-radius-md);
+    padding: .4rem 1rem;
+}
+
+.container:hover, .container:focus-within {
+    box-shadow: var(--mantine-shadow-md);
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+}
+
+.left {
+    flex-grow: 1;
+}
+.right {}
+
+.icon {
+    color: var(--color);
+}
+
+.colorDot {
+    background-color: var(--color);
+    border-radius: 999px;
+    width: 16px;
+    height: 16px;
+}

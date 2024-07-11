@@ -6,7 +6,6 @@ import { visitedCountriesWidget } from "./visited-countries.tsx";
 import { StatBtn } from "../components/atoms/stat-btn.tsx";
 
 const countryCount = regions.length;
-console.log(regions);
 
 export const visitedCountriesStatsWidget: WidgetDefinition<
   {},

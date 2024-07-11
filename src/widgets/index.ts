@@ -16,10 +16,12 @@ import { habitTrackerWidget } from "./habit-tracker.tsx";
 import { habitTrackerButtonsWidget } from "./habit-tracker-buttons.tsx";
 import { visitedCountriesWidget } from "./visited-countries.tsx";
 import { visitedCountriesStatsWidget } from "./visited-countries-stats.tsx";
+import { visitedCountriesListWidget } from "./visited-countries-list.tsx";
 
 export const devWidgets = {
   visitedCountriesWidget,
   visitedCountriesStatsWidget,
+  visitedCountriesListWidget,
 } as Record<string, WidgetDefinition<any, any>>;
 
 export const widgets = {

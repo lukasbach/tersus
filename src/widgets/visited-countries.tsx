@@ -25,7 +25,7 @@ type CountryItem = {
   kind: string;
 };
 
-type KindItem = {
+export type KindItem = {
   title: string;
   key: string;
   color: string;

@@ -1,0 +1,1 @@
+- Individual templates entry page
