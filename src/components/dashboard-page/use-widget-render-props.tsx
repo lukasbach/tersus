@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useComputedColorScheme } from "@mantine/core";
 import { WidgetRenderProps } from "../../types.ts";
 import { widgets } from "../../widgets";
 import { useManagedDashboardData } from "../../use-managed-dashboard-data.ts";
@@ -9,6 +10,7 @@ export const useWidgetRenderProps = (
   breakpoint: string,
   onOpenEditModal: () => void,
 ) => {
+  const colorScheme = useComputedColorScheme();
   const widget = dashboard.data!.widgets[widgetId];
   const widgetDef = widgets[widget.type];
   const referenceResolved =
@@ -25,6 +27,7 @@ export const useWidgetRenderProps = (
       widget.config.referencingId &&
       dashboard.data?.widgets[widget.config.referencingId]?.config;
     return {
+      isDark: colorScheme === "dark",
       id: widgetId,
       icon: widgetDef.IconComponent,
       layout,

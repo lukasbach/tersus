@@ -14,6 +14,12 @@ import { iframeWidget } from "./iframe.tsx";
 import { linkListWidget } from "./link-list.tsx";
 import { habitTrackerWidget } from "./habit-tracker.tsx";
 import { habitTrackerButtonsWidget } from "./habit-tracker-buttons.tsx";
+import { visitedCountriesWidget } from "./visited-countries.tsx";
+
+export const devWidgets = { visitedCountriesWidget } as Record<
+  string,
+  WidgetDefinition<any, any>
+>;
 
 export const widgets = {
   counterWidget,
@@ -32,3 +38,7 @@ export const widgets = {
   habitTrackerWidget,
   habitTrackerButtonsWidget,
 } as Record<string, WidgetDefinition<any, any>>;
+
+if (import.meta.env.MODE === "development") {
+  Object.assign(widgets, devWidgets);
+}

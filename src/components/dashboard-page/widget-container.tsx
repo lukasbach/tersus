@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, useMemo } from "react";
 import {
   ActionIcon,
   Box,
@@ -46,6 +46,21 @@ const WidgetContainerInner: FC<{
     dashboard,
     breakpoint,
     settings.open,
+  );
+
+  const menuActions = useMemo(
+    () =>
+      typeof widgetDef.menuActions === "function"
+        ? widgetDef.menuActions(renderProps)
+        : widgetDef.menuActions,
+    [widgetDef, renderProps],
+  );
+  const iconActions = useMemo(
+    () =>
+      typeof widgetDef.iconActions === "function"
+        ? widgetDef.iconActions(renderProps)
+        : widgetDef.iconActions,
+    [widgetDef, renderProps],
   );
 
   return (
@@ -107,7 +122,7 @@ const WidgetContainerInner: FC<{
             <IconGripVertical />
           </ActionIcon>
 
-          {widgetDef.iconActions?.map((action) => {
+          {iconActions?.map((action) => {
             if (action.skip?.(renderProps)) return null;
             if (typeof action.icon === "string") {
               return (
@@ -144,7 +159,7 @@ const WidgetContainerInner: FC<{
             </Menu.Target>
 
             <Menu.Dropdown>
-              {widgetDef.menuActions?.map((action) => {
+              {menuActions?.map((action) => {
                 if (action.skip?.(renderProps)) return null;
                 return (
                   <Menu.Item

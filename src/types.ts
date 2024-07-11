@@ -18,6 +18,7 @@ export type WidgetRenderProps<T, R> = {
   };
   layout: Layout;
   icon?: ComponentType;
+  isDark: boolean;
 };
 
 type WidgetAction<T, R> = {
@@ -37,8 +38,12 @@ export type WidgetDefinition<T, R> = {
   ConfigComponent?: ComponentType<WidgetRenderProps<T, R>>;
   DisplayComponent: ComponentType<WidgetRenderProps<T, R>>;
   IconComponent: ComponentType<{}>;
-  iconActions?: WidgetAction<T, R>[];
-  menuActions?: WidgetAction<T, R>[];
+  iconActions?:
+    | WidgetAction<T, R>[]
+    | ((props: WidgetRenderProps<T, R>) => WidgetAction<T, R>[]);
+  menuActions?:
+    | WidgetAction<T, R>[]
+    | ((props: WidgetRenderProps<T, R>) => WidgetAction<T, R>[]);
   skipTitleComponent?: boolean;
 };
 

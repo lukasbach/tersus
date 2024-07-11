@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { DEFAULT_THEME } from "@mantine/core";
 
 const colors = [
   "red",
@@ -8,8 +9,10 @@ const colors = [
   "yellow",
   "cyan",
   "blue",
-  "purple",
+  "violet",
 ];
+
+export const hexColors = colors.map((color) => DEFAULT_THEME.colors[color][5]);
 
 export const isNotNullish = <T>(value: T | null | undefined): value is T =>
   value !== undefined && value !== null;
@@ -62,6 +65,9 @@ export const randId = () => Math.random().toString(36).substr(2, 9);
 
 export const randomInteger = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
+
+export const randomItem = (array: any[]) =>
+  array[randomInteger(0, array.length - 1)];
 
 export const visualRound = (value: number, precision = 2) =>
   Math.round(value * 10 ** precision) / 10 ** precision;
