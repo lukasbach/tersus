@@ -1,5 +1,12 @@
 import { modals } from "@mantine/modals";
-import { Button, Group, NumberInput, TextInput } from "@mantine/core";
+import {
+  Button,
+  ComboboxData,
+  Group,
+  NumberInput,
+  Select,
+  TextInput,
+} from "@mantine/core";
 import { DateTimePicker, DateValue } from "@mantine/dates";
 
 export const promptText = ({
@@ -32,7 +39,7 @@ export const promptText = ({
           placeholder={labels?.placeholder}
           defaultValue={value}
           name="value"
-          data-autofocus
+          autoFocus
         />
         <Group justify="flex-end" mt="md">
           <Button onClick={() => modals.closeAll()} variant="default">
@@ -75,7 +82,7 @@ export const promptNumber = ({
           placeholder={labels?.placeholder}
           defaultValue={value}
           name="value"
-          data-autofocus
+          autoFocus
         />
         <Group justify="flex-end" mt="md">
           <Button onClick={() => modals.closeAll()} variant="default">
@@ -116,6 +123,53 @@ export const promptDate = ({
         <DateTimePicker
           label={labels?.input}
           placeholder={labels?.placeholder}
+          defaultValue={value}
+          name="value"
+          autoFocus
+        />
+        <Group justify="flex-end" mt="md">
+          <Button onClick={() => modals.closeAll()} variant="default">
+            {labels?.cancel ?? "Cancel"}
+          </Button>
+          <Button type="submit">{labels?.submit ?? "Submit"}</Button>
+        </Group>
+      </form>
+    ),
+  });
+};
+
+export const promptEnum = ({
+  labels,
+  value,
+  onSubmitModal,
+  data,
+  ...settings
+}: Parameters<typeof modals.open>[0] & {
+  value?: string;
+  onSubmitModal: (value: string) => void;
+  data: ComboboxData;
+  labels?: {
+    submit?: string;
+    cancel?: string;
+    input?: string;
+    placeholder?: string;
+  };
+}) => {
+  modals.open({
+    ...settings,
+    children: (
+      <form
+        onSubmit={(e: any) => {
+          e.preventDefault();
+          modals.closeAll();
+          onSubmitModal(e.target.elements.value.value);
+        }}
+      >
+        <Select
+          searchable
+          label={labels?.input}
+          placeholder={labels?.placeholder}
+          data={data}
           defaultValue={value}
           name="value"
           autoFocus

@@ -1,14 +1,16 @@
 import {
+  IconFlagPlus,
   IconSquareRounded,
   IconSquareRoundedCheck,
   IconWorld,
 } from "@tabler/icons-react";
-import WorldMap from "react-svg-worldmap";
+import WorldMap, { regions } from "react-svg-worldmap";
 import { Box, Center, ColorPicker, Group, TextInput } from "@mantine/core";
 import { useMemo } from "react";
 import { WidgetDefinition } from "../types.ts";
 import { FieldList } from "../components/atoms/field-list.tsx";
 import { hexColors, randId, randomItem } from "../utils.ts";
+import { promptEnum } from "../modal-utils.tsx";
 
 type CountryItem = {
   code: string;
@@ -152,8 +154,39 @@ export const visitedCountriesWidget: WidgetDefinition<
       </Center>
     );
   },
-  menuActions: ({ config, onChange }) =>
-    config.kinds.map((kind) => ({
+  menuActions: ({ config, onChange }) => [
+    {
+      icon: () => <IconFlagPlus />,
+      text: "Search country...",
+      action: () => {
+        promptEnum({
+          value: "",
+          title: "Mark country by name",
+          labels: {
+            submit: "Mark",
+            cancel: "Cancel",
+            placeholder: "Search country...",
+            input: "Country name",
+          },
+          data: regions
+            .map((country) => ({
+              value: country.code,
+              label: country.name,
+            }))
+            .sort((a, b) => a.label.localeCompare(b.label)),
+          onSubmitModal: (code) => {
+            if (!code) return;
+            onChange({
+              countries: [
+                ...config.countries.filter((country) => country.code !== code),
+                { code, date: Date.now(), kind: config.kind },
+              ],
+            });
+          },
+        });
+      },
+    },
+    ...config.kinds.map((kind) => ({
       text: `Set country to ${kind.title} on click`,
       icon: () =>
         config.kind === kind.key ? (
@@ -165,4 +198,5 @@ export const visitedCountriesWidget: WidgetDefinition<
         onChange({ kind: kind.key });
       },
     })),
+  ],
 };
