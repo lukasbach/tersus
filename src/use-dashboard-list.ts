@@ -33,5 +33,21 @@ export const useDashboardList = () => {
     setStarred((current) => current.filter((d) => d.id !== id));
   });
 
-  return { recents, starred, addRecent, addStarred, removeStarred };
+  const updateDashboardName = useStableHandler((id: string, title: string) => {
+    setRecents((current) =>
+      current.map((d) => (d.id === id ? { ...d, title } : d)),
+    );
+    setStarred((current) =>
+      current.map((d) => (d.id === id ? { ...d, title } : d)),
+    );
+  });
+
+  return {
+    recents,
+    starred,
+    addRecent,
+    addStarred,
+    removeStarred,
+    updateDashboardName,
+  };
 };

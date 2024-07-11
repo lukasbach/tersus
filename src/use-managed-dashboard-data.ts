@@ -1,40 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Layouts } from "react-grid-layout";
 import { useDebouncedEffect } from "@react-hookz/web";
 import { useWindowEvent } from "@mantine/hooks";
-import { updateDashboard, useDashboardData } from "./firebase/app.ts";
+import { useSyncDashboardData } from "./firebase/app.ts";
 import { DashboardConfig } from "./types.ts";
-import { randId, removeUndefinedValues, useStableHandler } from "./utils.ts";
+import { randId, useStableHandler } from "./utils.ts";
 import { widgets } from "./widgets";
 
 const breakpoints = ["lg", "md", "sm", "xs", "xxs"];
 
 export const useManagedDashboardData = (id: string) => {
-  const [loadedData] = useDashboardData(id);
-  const [currentData, setCurrentData] = useState<DashboardConfig | undefined>();
+  const { data, update, persist } = useSyncDashboardData(id);
 
-  useEffect(() => {
-    if (!loadedData || currentData) return;
-    console.log("Initially loaded data for document", id);
-    setCurrentData(loadedData.data());
-  }, [currentData, id, loadedData]);
-
-  const persist = useStableHandler(async () => {
-    if (!currentData) return;
-    console.log("Saving dashboard:", id, currentData);
-    const lastEdit = Date.now();
-    await updateDashboard(
-      id,
-      removeUndefinedValues({
-        ...currentData,
-        lastEdit,
-        editedAfterWeek:
-          lastEdit - currentData.createdAt > 7 * 24 * 60 * 60 * 1000,
-      }),
-    );
-  });
-
-  useDebouncedEffect(persist, [currentData], 4000, 20000);
+  useDebouncedEffect(persist, [data], 4000, 20000);
   useWindowEvent("pagehide", persist);
   useWindowEvent("beforeunload", persist);
   useEffect(
@@ -45,25 +23,25 @@ export const useManagedDashboardData = (id: string) => {
   );
 
   const onLayoutChange = useStableHandler((_, layouts: Layouts) => {
-    if (!currentData) return;
+    if (!data) return;
     console.log("Layout change");
-    setCurrentData({
-      ...currentData,
+    update({
+      ...data,
       layouts,
     });
   });
 
   const updateWidgetConfig = useStableHandler(
     (widgetId: string, newConfig: any) => {
-      if (!currentData) return;
-      setCurrentData({
-        ...currentData,
+      if (!data) return;
+      update({
+        ...data,
         widgets: {
-          ...currentData.widgets,
+          ...data.widgets,
           [widgetId]: {
-            ...currentData.widgets[widgetId],
+            ...data.widgets[widgetId],
             config: {
-              ...currentData.widgets[widgetId].config,
+              ...data.widgets[widgetId].config,
               ...newConfig,
             },
           },
@@ -74,13 +52,13 @@ export const useManagedDashboardData = (id: string) => {
 
   const addWidget = useStableHandler((widgetType: string) => {
     const widget = widgets[widgetType];
-    if (!currentData) return;
+    if (!data) return;
     const id = randId();
     for (const layoutKey of breakpoints) {
-      if (!currentData.layouts[layoutKey]) {
-        currentData.layouts[layoutKey] = [];
+      if (!data.layouts[layoutKey]) {
+        data.layouts[layoutKey] = [];
       }
-      currentData.layouts[layoutKey].push({
+      data.layouts[layoutKey].push({
         x: 0,
         y: Infinity,
         w: 4,
@@ -91,11 +69,10 @@ export const useManagedDashboardData = (id: string) => {
         i: id,
       });
     }
-    console.log("!!", currentData);
-    setCurrentData({
-      ...currentData,
+    update({
+      ...data,
       widgets: {
-        ...currentData.widgets,
+        ...data.widgets,
         [id]: {
           config: widget.default,
           type: widgetType,
@@ -105,29 +82,31 @@ export const useManagedDashboardData = (id: string) => {
   });
 
   const deleteWidget = useStableHandler((widgetId: string) => {
-    if (!currentData) return;
-    setCurrentData({
-      ...currentData,
+    if (!data) return;
+    update({
+      ...data,
       layouts: Object.fromEntries(
-        Object.entries(currentData.layouts).map(([key, value]) => [
+        Object.entries(data.layouts).map(([key, value]) => [
           key,
           value.filter((item) => item.i !== widgetId),
         ]),
       ),
       widgets: Object.fromEntries(
-        Object.entries(currentData.widgets).filter(([key]) => key !== widgetId),
+        Object.entries(data.widgets).filter(([key]) => key !== widgetId),
       ),
     });
   });
 
   const updateDashboardData = useStableHandler(
     (newData: Partial<DashboardConfig>) => {
-      setCurrentData((old) => (old ? { ...old, ...newData } : undefined));
+      if (!data) return;
+      console.log("!!", data, newData);
+      update({ ...data, ...newData });
     },
   );
 
   return {
-    data: currentData,
+    data,
     onLayoutChange,
     updateWidgetConfig,
     addWidget,
