@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
 import { DEFAULT_THEME } from "@mantine/core";
 
-const colors = [
+export const colors = [
   "red",
   "indigo",
   "orange",

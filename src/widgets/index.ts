@@ -15,11 +15,12 @@ import { linkListWidget } from "./link-list.tsx";
 import { habitTrackerWidget } from "./habit-tracker.tsx";
 import { habitTrackerButtonsWidget } from "./habit-tracker-buttons.tsx";
 import { visitedCountriesWidget } from "./visited-countries.tsx";
+import { visitedCountriesStatsWidget } from "./visited-countries-stats.tsx";
 
-export const devWidgets = { visitedCountriesWidget } as Record<
-  string,
-  WidgetDefinition<any, any>
->;
+export const devWidgets = {
+  visitedCountriesWidget,
+  visitedCountriesStatsWidget,
+} as Record<string, WidgetDefinition<any, any>>;
 
 export const widgets = {
   counterWidget,

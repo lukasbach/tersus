@@ -1,0 +1,6 @@
+.statBtnClickable {
+    opacity: 0.9;
+}
+.statBtnClickable:hover {
+    opacity: 1;
+}

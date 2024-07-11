@@ -5,11 +5,18 @@ import {
   IconWorld,
 } from "@tabler/icons-react";
 import WorldMap, { regions } from "react-svg-worldmap";
-import { Box, Center, ColorPicker, Group, TextInput } from "@mantine/core";
+import {
+  Box,
+  Center,
+  ColorPicker,
+  DEFAULT_THEME,
+  Group,
+  TextInput,
+} from "@mantine/core";
 import { useMemo } from "react";
 import { WidgetDefinition } from "../types.ts";
 import { FieldList } from "../components/atoms/field-list.tsx";
-import { hexColors, randId, randomItem } from "../utils.ts";
+import { colors, hexColors, randId, randomItem } from "../utils.ts";
 import { promptEnum } from "../modal-utils.tsx";
 
 type CountryItem = {
@@ -78,8 +85,14 @@ export const visitedCountriesWidget: WidgetDefinition<
             <ColorPicker
               format="hex"
               swatchesPerRow={8}
-              value={value.color}
-              onChange={(color) => onChange({ color })}
+              value={DEFAULT_THEME.colors[value.color]?.[5]}
+              onChange={(color) =>
+                onChange({
+                  color: Object.keys(DEFAULT_THEME.colors).find(
+                    (key) => DEFAULT_THEME.colors[key]?.[5] === color,
+                  ),
+                })
+              }
               withPicker={false}
               size="xs"
               fullWidth
@@ -90,7 +103,7 @@ export const visitedCountriesWidget: WidgetDefinition<
       )}
       createItem={() => ({
         title: "Places to visit",
-        color: randomItem(hexColors),
+        color: randomItem(colors),
         key: randId(),
       })}
     />
@@ -119,7 +132,7 @@ export const visitedCountriesWidget: WidgetDefinition<
           }}
           styleFunction={({ countryValue }) => {
             const defaults = {
-              fill: countryValue ? "blue" : "transparent",
+              fill: "transparent",
               stroke: isDark ? "#fff" : "#000",
               strokeWidth: 1,
               strokeOpacity: 0.2,
@@ -129,7 +142,9 @@ export const visitedCountriesWidget: WidgetDefinition<
             const [, kind] = countryValue.split(";");
             return {
               ...defaults,
-              fill: kindsMap[kind]?.color ?? "transparent",
+              fill:
+                DEFAULT_THEME.colors[kindsMap[kind]?.color]?.[5] ??
+                "transparent",
             };
           }}
           onClickFunction={(c) => {

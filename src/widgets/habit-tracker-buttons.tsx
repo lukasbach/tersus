@@ -1,32 +1,18 @@
-import {
-  Badge,
-  Center,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  UnstyledButton,
-  isLightColor,
-  parseThemeColor,
-  useMantineTheme,
-} from "@mantine/core";
+import { Center, Group } from "@mantine/core";
 import { IconHandClick } from "@tabler/icons-react";
 import { FC, useMemo } from "react";
 import { PayloadOfWidgetDefinition, WidgetDefinition } from "../types.ts";
 import { HabitEntry, habitTrackerWidget, toDateKey } from "./habit-tracker.tsx";
 import { getColor } from "../utils.ts";
-import styles from "./styles.module.css";
+import { StatBtn } from "../components/atoms/stat-btn.tsx";
 
 const HabitBtn: FC<{
   habit: HabitEntry;
   habitIndex: number;
   onChange: (habit: HabitEntry) => void;
 }> = ({ habitIndex, habit, onChange }) => {
-  const theme = useMantineTheme();
   const done = habit.done.includes(toDateKey(new Date()));
   const color = getColor(habitIndex);
-  const isLight = isLightColor(parseThemeColor({ color, theme }).value, 0.3);
-  const textColor = isLight ? "black" : "white";
   const sorted = useMemo(() => habit.done.sort(), [habit.done]);
 
   const percentage = useMemo(() => {
@@ -55,7 +41,7 @@ const HabitBtn: FC<{
   }, [sorted]);
 
   return (
-    <UnstyledButton
+    <StatBtn
       onClick={() => {
         onChange({
           ...habit,
@@ -64,29 +50,13 @@ const HabitBtn: FC<{
             : [...habit.done, toDateKey(new Date())],
         });
       }}
+      color={color}
+      value={`${percentage}%`}
+      badge={`${streak} Streak`}
+      active={done}
     >
-      <Paper
-        p="lg"
-        radius="lg"
-        bg={`var(--mantine-color-${color}-${done ? "filled" : "light"}`}
-        c={!done ? undefined : textColor}
-        className={styles.habitTrackerBtn}
-      >
-        <Group align="flex-start">
-          <Stack>
-            <Text>{habit.title}</Text>
-            <Text fw="800" size="2.2rem">
-              {percentage}%
-            </Text>
-          </Stack>
-          <Stack>
-            <Badge variant={done ? "transparent" : "light"} color={color}>
-              {streak} Streak
-            </Badge>
-          </Stack>
-        </Group>
-      </Paper>
-    </UnstyledButton>
+      {habit.title}
+    </StatBtn>
   );
 };
 
