@@ -95,7 +95,7 @@ export const visitedCountriesWidget: WidgetDefinition<
       })}
     />
   ),
-  DisplayComponent: ({ config, onChange, isDark, layout }) => {
+  DisplayComponent: ({ config, onChange, isDark, rect }) => {
     const kindsMap = useMemo(
       () =>
         Object.fromEntries(
@@ -106,7 +106,7 @@ export const visitedCountriesWidget: WidgetDefinition<
     return (
       <Center h="100%" style={{ overflow: "hidden" }}>
         <WorldMap
-          size={Math.min(layout.w * 100, layout.h * 100)}
+          size={Math.min(rect.width + 200, rect.height + 200)}
           data={config.countries.map((c) => ({
             country: c.code,
             value: `${new Date(c.date).toLocaleDateString()};${c.kind}`,

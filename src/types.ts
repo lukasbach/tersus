@@ -19,6 +19,7 @@ export type WidgetRenderProps<T, R> = {
   layout: Layout;
   icon?: ComponentType;
   isDark: boolean;
+  rect: Omit<DOMRectReadOnly, "toJSON">;
 };
 
 type WidgetAction<T, R> = {

@@ -1,9 +1,10 @@
-import { FC, memo, useMemo } from "react";
+import { ComponentProps, FC, RefObject, memo, useMemo } from "react";
 import {
   ActionIcon,
   Box,
   Button,
   Card,
+  Drawer,
   Flex,
   Menu,
   Modal,
@@ -15,10 +16,15 @@ import {
   IconBug,
   IconDots,
   IconGripVertical,
+  IconMaximize,
   IconPencil,
   IconTrash,
 } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
+import {
+  useDebouncedValue,
+  useDisclosure,
+  useResizeObserver,
+} from "@mantine/hooks";
 import { modals } from "@mantine/modals";
 import { widgets } from "../../widgets";
 import { useWidgetRenderProps } from "./use-widget-render-props.tsx";
@@ -34,8 +40,21 @@ const WidgetContainerInner: FC<{
   widgetId: string;
   dashboard: ReturnType<typeof useManagedDashboardData>;
   breakpoint: string;
-}> = ({ dashboard, widgetId, breakpoint }) => {
+  widgetRef: RefObject<any>;
+  drawerRef: RefObject<any>;
+  widgetRect: Omit<DOMRectReadOnly, "toJSON">;
+  drawerRect: Omit<DOMRectReadOnly, "toJSON">;
+}> = ({
+  dashboard,
+  widgetId,
+  breakpoint,
+  widgetRect,
+  widgetRef,
+  drawerRect,
+  drawerRef,
+}) => {
   const [settingsOpen, settings] = useDisclosure(false);
+  const [drawerOpen, drawer] = useDisclosure(false);
   const [debugMode] = useDebugMode();
 
   const widget = dashboard.data!.widgets[widgetId];
@@ -45,7 +64,12 @@ const WidgetContainerInner: FC<{
     widgetId,
     dashboard,
     breakpoint,
+    widgetRect,
     settings.open,
+  );
+  const drawerRenderProps = useMemo(
+    () => ({ ...renderProps, rect: drawerRect }),
+    [drawerRect, renderProps],
   );
 
   const menuActions = useMemo(
@@ -174,6 +198,12 @@ const WidgetContainerInner: FC<{
                 );
               })}
 
+              {menuActions && <Menu.Divider />}
+
+              <Menu.Item leftSection={<IconMaximize />} onClick={drawer.open}>
+                Fullscreen
+              </Menu.Item>
+
               <Menu.Item
                 leftSection={<IconPencil />}
                 onClick={renderProps.onOpenEditModal}
@@ -219,7 +249,7 @@ const WidgetContainerInner: FC<{
           </Menu>
         </FloatingBar>
         <Card className={styles.container} withBorder shadow="sm" radius="md">
-          <Flex h="100%" direction="column">
+          <Flex h="100%" direction="column" ref={widgetRef}>
             {renderProps.referenceResolved ? (
               <>
                 {!widgetDef.skipTitleComponent && (
@@ -247,8 +277,43 @@ const WidgetContainerInner: FC<{
           </Flex>
         </Card>
       </FloatingBarContainer>
+      <Drawer
+        opened={drawerOpen}
+        onClose={drawer.close}
+        size="90%"
+        styles={{ body: { height: "100%" } }}
+        withCloseButton={false}
+      >
+        <Box ref={drawerRef} h="100%">
+          <widgetDef.DisplayComponent {...drawerRenderProps} />
+        </Box>
+      </Drawer>
     </>
   );
 };
 
-export const WidgetContainer = memo(WidgetContainerInner);
+const WidgetContainerInnerMemo = memo(WidgetContainerInner);
+const WidgetContainerOuter: FC<
+  Omit<
+    ComponentProps<typeof WidgetContainerInner>,
+    "widgetRect" | "drawerRect" | "widgetRef" | "drawerRef"
+  >
+> = (props) => {
+  const [widgetRef, widgetRectRaw] = useResizeObserver();
+  const [drawerRef, drawerRectRaw] = useResizeObserver();
+
+  const [widgetRect] = useDebouncedValue(widgetRectRaw, 300);
+  const [drawerRect] = useDebouncedValue(drawerRectRaw, 300);
+
+  return (
+    <WidgetContainerInnerMemo
+      {...props}
+      widgetRef={widgetRef}
+      widgetRect={widgetRect}
+      drawerRef={drawerRef}
+      drawerRect={drawerRect}
+    />
+  );
+};
+
+export const WidgetContainer = memo(WidgetContainerOuter);

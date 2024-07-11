@@ -8,6 +8,7 @@ export const useWidgetRenderProps = (
   widgetId: string,
   dashboard: ReturnType<typeof useManagedDashboardData>,
   breakpoint: string,
+  rect: Omit<DOMRectReadOnly, "toJSON">,
   onOpenEditModal: () => void,
 ) => {
   const colorScheme = useComputedColorScheme();
@@ -27,6 +28,7 @@ export const useWidgetRenderProps = (
       widget.config.referencingId &&
       dashboard.data?.widgets[widget.config.referencingId]?.config;
     return {
+      rect,
       isDark: colorScheme === "dark",
       id: widgetId,
       icon: widgetDef.IconComponent,
@@ -49,11 +51,13 @@ export const useWidgetRenderProps = (
   }, [
     widget.config,
     dashboard,
+    rect,
+    colorScheme,
+    widgetId,
     widgetDef.IconComponent,
     layout,
     onOpenEditModal,
     referenceResolved,
-    widgetId,
   ]);
 
   return props;
